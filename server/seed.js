@@ -1,4 +1,7 @@
 require('dotenv').config();
+// Force Google DNS to bypass IPv6 DNS server that can't resolve Atlas SRV records
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
 const mongoose    = require('mongoose');
 const bcrypt      = require('bcryptjs');
 const Product        = require('./models/Product');
@@ -698,7 +701,7 @@ const factoryContent = {
 // ─────────────────────────────────────────────────────────────────────────────
 async function seed() {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, { family: 4 });
     console.log('MongoDB connected');
 
     await Product.deleteMany({});
