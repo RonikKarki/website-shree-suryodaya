@@ -1,0 +1,13 @@
+{
+  "name": "shree-suryodaya-website",
+  "version": "1.0.0",
+  "description": "Corporate website for Shree Suryodaya Khadya Udhyog Limited",
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "seed": "node server/seed.js",
+    "start:server": "npm start --prefix server"
+  },
+  "private": true
+}
