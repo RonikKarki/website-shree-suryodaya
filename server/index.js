@@ -28,8 +28,8 @@ app.use(helmet({
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? [process.env.CLIENT_URL || 'https://yourdomain.com']
-  : ['http://localhost:5173', 'http://localhost:3000'];
+  ? (process.env.CLIENT_URL || '').split(',').map((s) => s.trim()).filter(Boolean)
+  : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
 
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
