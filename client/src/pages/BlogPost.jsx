@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaCalendar, FaUser, FaTag, FaArrowLeft, FaEye, FaWhatsapp, FaFacebook } from 'react-icons/fa';
 import useSEO from '../hooks/useSEO';
+import resolveUrl from '../lib/resolveUrl';
 
 const categoryColors = {
   news: 'bg-blue-100 text-blue-800', product: 'bg-amber-100 text-amber-800',
@@ -85,7 +86,7 @@ export default function BlogPost() {
       {/* ── Cover image ── */}
       {post.coverImage && (
         <div className="w-full h-72 md:h-96 overflow-hidden">
-          <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
+          <img src={resolveUrl(post.coverImage)} alt={post.title} className="w-full h-full object-cover" />
         </div>
       )}
 
@@ -189,7 +190,7 @@ export default function BlogPost() {
                   className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 group flex gap-4"
                 >
                   {rp.coverImage ? (
-                    <img src={rp.coverImage} alt="" className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
+                    <img src={resolveUrl(rp.coverImage)} alt="" className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
                   ) : (
                     <div className="w-16 h-16 rounded-xl bg-forest-50 flex items-center justify-center flex-shrink-0">
                       <span className="text-2xl opacity-40">📰</span>

@@ -1,4 +1,5 @@
 import { FaWhatsapp, FaSeedling, FaLeaf, FaTag } from 'react-icons/fa';
+import resolveUrl from '../lib/resolveUrl';
 
 const categoryConfig = {
   premium:   { bg: 'bg-amber-100',   text: 'text-amber-800',   label: 'Premium',   dot: 'bg-amber-400' },
@@ -35,7 +36,7 @@ export default function ProductCard({ product, whatsappNumber, compactMode = fal
       <div className={`relative overflow-hidden ${compactMode ? 'h-44' : 'h-52'} bg-gradient-to-br ${gradient} flex-shrink-0`}>
         {product.image ? (
           <img
-            src={product.image}
+            src={resolveUrl(product.image)}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
@@ -60,7 +61,7 @@ export default function ProductCard({ product, whatsappNumber, compactMode = fal
             <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full shadow-sm"
               style={{ backgroundColor: `${brand.accentColor}ee`, color: '#fff' }}>
               {brand.logo
-                ? <img src={brand.logo} alt="" className="w-3 h-3 object-contain" />
+                ? <img src={resolveUrl(brand.logo)} alt="" className="w-3 h-3 object-contain" />
                 : <FaTag className="text-xs opacity-80" />}
               {brand.name}
             </span>

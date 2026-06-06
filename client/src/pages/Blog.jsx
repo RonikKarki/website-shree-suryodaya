@@ -5,6 +5,7 @@ import { FaCalendar, FaUser, FaTag, FaArrowRight, FaEye } from 'react-icons/fa';
 import PageHero from '../components/PageHero';
 import SectionReveal from '../components/SectionReveal';
 import useSEO from '../hooks/useSEO';
+import resolveUrl from '../lib/resolveUrl';
 
 const CATEGORIES = [
   { key: 'all',          label: 'All Posts' },
@@ -37,7 +38,7 @@ function PostCard({ post, featured = false }) {
       <div className={`relative overflow-hidden flex-shrink-0 ${featured ? 'lg:w-1/2 h-64 lg:h-auto' : 'h-52'} bg-gradient-to-br from-forest-50 to-forest-100`}>
         {post.coverImage ? (
           <img
-            src={post.coverImage}
+            src={resolveUrl(post.coverImage)}
             alt={post.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />

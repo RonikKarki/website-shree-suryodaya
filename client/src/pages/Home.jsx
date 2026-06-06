@@ -4,6 +4,7 @@ import { FaArrowRight, FaCheckCircle, FaPhone, FaMapMarkerAlt, FaStar, FaQuoteLe
 import axios from 'axios';
 import useSEO from '../hooks/useSEO';
 import BrandCard from '../components/BrandCard';
+import resolveUrl from '../lib/resolveUrl';
 
 import HeroSlider from '../components/HeroSlider';
 import StatCounter from '../components/StatCounter';
@@ -25,7 +26,7 @@ function GalleryItem({ src, caption, index }) {
     <div className="relative group overflow-hidden rounded-2xl aspect-square shadow-sm hover:shadow-lg transition-all duration-300">
       {src ? (
         <img
-          src={src}
+          src={resolveUrl(src)}
           alt={caption || ''}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -150,7 +151,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-4">
                   {companyIntro.images?.[0] ? (
                     <img
-                      src={companyIntro.images[0]}
+                      src={resolveUrl(companyIntro.images[0])}
                       alt="Company"
                       className="col-span-2 rounded-2xl object-cover h-56 w-full shadow-md"
                     />
@@ -164,7 +165,7 @@ export default function Home() {
                   )}
                   {companyIntro.images?.[1] ? (
                     <img
-                      src={companyIntro.images[1]}
+                      src={resolveUrl(companyIntro.images[1])}
                       alt="Company 2"
                       className="rounded-2xl object-cover h-40 w-full shadow-md"
                     />
@@ -409,7 +410,7 @@ export default function Home() {
                     <div className="flex items-center gap-3 border-t border-gray-50 pt-4">
                       <div className="w-10 h-10 rounded-full overflow-hidden bg-forest-100 flex items-center justify-center flex-shrink-0">
                         {t.avatar ? (
-                          <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                          <img src={resolveUrl(t.avatar)} alt={t.name} className="w-full h-full object-cover" />
                         ) : (
                           <span className="text-forest-700 font-bold text-sm">{t.name?.[0]?.toUpperCase()}</span>
                         )}

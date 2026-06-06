@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaCheckCircle, FaArrowRight } from 'react-icons/fa';
 import SectionReveal from '../components/SectionReveal';
 import useSEO from '../hooks/useSEO';
+import resolveUrl from '../lib/resolveUrl';
 
 const valueColors = {
   green: 'bg-forest-700',
@@ -47,7 +48,7 @@ export default function About() {
       <section className="relative bg-gradient-to-br from-forest-900 via-forest-800 to-earth-800 text-white pt-32 pb-24 overflow-hidden">
         <div className="absolute inset-0">
           {hero?.image && (
-            <img src={hero.image} alt="" className="w-full h-full object-cover opacity-20" />
+            <img src={resolveUrl(hero.image)} alt="" className="w-full h-full object-cover opacity-20" />
           )}
           <div className="absolute inset-0 bg-gradient-to-br from-forest-900/90 to-forest-800/80" />
         </div>
@@ -81,7 +82,7 @@ export default function About() {
 
               <SectionReveal delay={150}>
                 {profile.image ? (
-                  <img src={profile.image} alt="Company" className="w-full h-72 object-cover rounded-3xl shadow-xl mb-6" />
+                  <img src={resolveUrl(profile.image)} alt="Company" className="w-full h-72 object-cover rounded-3xl shadow-xl mb-6" />
                 ) : (
                   <div className="w-full h-72 bg-gradient-to-br from-forest-700 to-forest-900 rounded-3xl shadow-xl mb-6 flex items-center justify-center">
                     <div className="text-center text-white p-8">
@@ -125,7 +126,7 @@ export default function About() {
                 <SectionReveal key={i} delay={i * 80}>
                   <div className={`bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow h-full border ${accent}`}>
                     {vm.image && (
-                      <img src={vm.image} alt={vm.title} className="w-full h-36 object-cover" />
+                      <img src={resolveUrl(vm.image)} alt={vm.title} className="w-full h-36 object-cover" />
                     )}
                     <div className="p-7">
                       <div className={`w-12 h-12 ${bg} rounded-2xl flex items-center justify-center mb-5 text-2xl shadow-md`}>
@@ -185,7 +186,7 @@ export default function About() {
                     <div className={`flex gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-start`}>
                       <div className={`flex-1 pl-14 md:pl-0 ${i % 2 === 0 ? 'md:pr-14 md:text-right' : 'md:pl-14'}`}>
                         <div className="bg-white border border-gray-100 shadow-sm hover:shadow-md rounded-2xl p-5 transition-shadow">
-                          {m.image && <img src={m.image} alt={m.title} className="w-full h-32 object-cover rounded-xl mb-4" />}
+                          {m.image && <img src={resolveUrl(m.image)} alt={m.title} className="w-full h-32 object-cover rounded-xl mb-4" />}
                           <span className="inline-block bg-forest-700 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">{m.year}</span>
                           <h4 className="font-heading font-bold text-forest-800 mb-1">{m.title}</h4>
                           <p className="text-gray-600 text-sm leading-relaxed">{m.description}</p>
@@ -232,7 +233,7 @@ export default function About() {
                   <div className="grid grid-cols-2 gap-4">
                     {factory.images.map((img, i) => (
                       img.src ? (
-                        <img key={img.id} src={img.src} alt={img.caption} className={`rounded-2xl object-cover shadow-md ${i === 0 ? 'col-span-2 h-48' : 'h-36'}`} />
+                        <img key={img.id} src={resolveUrl(img.src)} alt={img.caption} className={`rounded-2xl object-cover shadow-md ${i === 0 ? 'col-span-2 h-48' : 'h-36'}`} />
                       ) : (
                         <div key={img.id} className={`rounded-2xl bg-gradient-to-br from-forest-100 to-forest-200 flex items-center justify-center ${i === 0 ? 'col-span-2 h-48' : 'h-36'}`}>
                           <span className="text-4xl opacity-30">🏭</span>
@@ -261,7 +262,7 @@ export default function About() {
                 <SectionReveal key={m.id} delay={i * 80}>
                   <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow h-full">
                     {m.image ? (
-                      <img src={m.image} alt={m.name} className="w-full h-52 object-cover" />
+                      <img src={resolveUrl(m.image)} alt={m.name} className="w-full h-52 object-cover" />
                     ) : (
                       <div className="h-52 bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center">
                         <span className="text-white text-6xl font-bold font-heading opacity-40">

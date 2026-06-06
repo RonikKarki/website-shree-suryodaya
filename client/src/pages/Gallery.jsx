@@ -4,6 +4,7 @@ import { FaTimes, FaChevronLeft, FaChevronRight, FaSearch, FaExpand } from 'reac
 import PageHero from '../components/PageHero';
 import SectionReveal from '../components/SectionReveal';
 import useSEO from '../hooks/useSEO';
+import resolveUrl from '../lib/resolveUrl';
 
 const CATEGORIES = [
   { key: 'all',        label: 'All Photos',  emoji: '🖼️' },
@@ -81,7 +82,7 @@ function Lightbox({ images, index, onClose }) {
       <div className="max-w-5xl max-h-[85vh] px-16" onClick={(e) => e.stopPropagation()}>
         {img.src ? (
           <img
-            src={img.src}
+            src={resolveUrl(img.src)}
             alt={img.caption || img.title || ''}
             className="max-w-full max-h-[78vh] object-contain rounded-xl shadow-2xl"
           />
@@ -118,7 +119,7 @@ function Lightbox({ images, index, onClose }) {
               className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition ${i === current ? 'border-brand-400' : 'border-transparent opacity-50 hover:opacity-80'}`}
             >
               {img.src ? (
-                <img src={img.src} alt="" className="w-full h-full object-cover" />
+                <img src={resolveUrl(img.src)} alt="" className="w-full h-full object-cover" />
               ) : (
                 <div className={`w-full h-full bg-gradient-to-br ${catGradients[img.category] || 'from-gray-100 to-gray-200'} flex items-center justify-center`}>
                   <span className="text-lg">{catEmojis[img.category] || '📷'}</span>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
+import resolveUrl from '../lib/resolveUrl';
 
 export default function BrandCard({ brand }) {
   const color = brand.accentColor || '#1B5E20';
@@ -17,7 +18,7 @@ export default function BrandCard({ brand }) {
         >
           {brand.logo ? (
             <img
-              src={brand.logo}
+              src={resolveUrl(brand.logo)}
               alt={`${brand.name} logo`}
               className="w-full h-full object-contain p-2"
             />

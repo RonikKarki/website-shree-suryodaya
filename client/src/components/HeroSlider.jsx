@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight, FaLeaf } from 'react-icons/fa';
+import resolveUrl from '../lib/resolveUrl';
 
 // Gradient fallbacks when no image is uploaded
 const gradientFallbacks = [
@@ -63,7 +64,7 @@ export default function HeroSlider({ slides = [], buttons = [], autoplayInterval
         >
           {s.image ? (
             <img
-              src={s.image}
+              src={resolveUrl(s.image)}
               alt={s.title || ''}
               className="w-full h-full object-cover"
             />

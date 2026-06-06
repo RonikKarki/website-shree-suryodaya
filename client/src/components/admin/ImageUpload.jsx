@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { FaUpload, FaTrash, FaLink } from 'react-icons/fa';
 import { useAdmin } from '../../context/AdminContext';
+import resolveUrl from '../../lib/resolveUrl';
 
 export default function ImageUpload({ value, onChange, label = 'Image', height = 'h-40' }) {
   const { uploadImage } = useAdmin();
@@ -44,7 +45,7 @@ export default function ImageUpload({ value, onChange, label = 'Image', height =
       <div className={`relative border-2 border-dashed border-gray-200 rounded-xl overflow-hidden ${height} bg-gray-50 flex items-center justify-center`}>
         {value ? (
           <>
-            <img src={value} alt="Preview" className="w-full h-full object-cover" />
+            <img src={resolveUrl(value)} alt="Preview" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all duration-200 flex items-center justify-center gap-3 opacity-0 hover:opacity-100">
               <button
                 type="button"
