@@ -25,3 +25,9 @@ Thumbs.db
 # Uploads (user-uploaded images — store on server, not in git)
 server/public/uploads/*
 !server/public/uploads/.gitkeep
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
