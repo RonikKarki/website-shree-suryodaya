@@ -19,19 +19,9 @@ const Testimonial    = require('../models/Testimonial');
 const FactoryContent = require('../models/FactoryContent');
 const Brand          = require('../models/Brand');
 
-// ─── Multer ───────────────────────────────────────────────────────────────────
-const uploadsDir = path.join(__dirname, '../public/uploads');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename:    (req, file, cb) => {
-    const ext  = path.extname(file.originalname).toLowerCase();
-    cb(null, `${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
-  },
-});
+// ─── Multer (memory storage — buffer passed directly to base64) ───────────────
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = /jpeg|jpg|png|webp|gif/;
@@ -101,17 +91,13 @@ router.post('/change-password', adminAuth, async (req, res) => {
 // ─── Image Upload ─────────────────────────────────────────────────────────────
 router.post('/upload', adminAuth, upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, message: 'No file uploaded.' });
-  res.json({ success: true, url: `/uploads/${req.file.filename}` });
+  const dataUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+  res.json({ success: true, url: dataUrl });
 });
 
 router.delete('/upload', adminAuth, (req, res) => {
-  const { filename } = req.body;
-  if (!filename) return res.status(400).json({ success: false, message: 'Filename required.' });
-  const filePath = path.join(uploadsDir, path.basename(filename));
-  fs.unlink(filePath, (err) => {
-    if (err) return res.status(404).json({ success: false, message: 'File not found.' });
-    res.json({ success: true });
-  });
+  // base64 images are stored in MongoDB — nothing to delete from disk
+  res.json({ success: true });
 });
 
 // ─── Dashboard stats ──────────────────────────────────────────────────────────
@@ -199,7 +185,6 @@ router.delete('/products/:id', adminAuth, async (req, res) => {
   try {
     const p = await Product.findByIdAndDelete(req.params.id);
     if (!p) return res.status(404).json({ success: false, message: 'Not found' });
-    if (p.image?.startsWith('/uploads/')) fs.unlink(path.join(uploadsDir, path.basename(p.image)), () => {});
     res.json({ success: true });
   } catch { res.status(500).json({ success: false, message: 'Server error' }); }
 });
@@ -307,7 +292,6 @@ router.delete('/gallery/:id', adminAuth, async (req, res) => {
   try {
     const img = await GalleryImage.findByIdAndDelete(req.params.id);
     if (!img) return res.status(404).json({ success: false, message: 'Not found' });
-    if (img.src?.startsWith('/uploads/')) fs.unlink(path.join(uploadsDir, path.basename(img.src)), () => {});
     res.json({ success: true });
   } catch { res.status(500).json({ success: false, message: 'Server error' }); }
 });
@@ -364,7 +348,6 @@ router.delete('/blog/:id', adminAuth, async (req, res) => {
   try {
     const p = await BlogPost.findByIdAndDelete(req.params.id);
     if (!p) return res.status(404).json({ success: false, message: 'Not found' });
-    if (p.coverImage?.startsWith('/uploads/')) fs.unlink(path.join(uploadsDir, path.basename(p.coverImage)), () => {});
     res.json({ success: true });
   } catch { res.status(500).json({ success: false, message: 'Server error' }); }
 });
@@ -407,7 +390,6 @@ router.delete('/testimonials/:id', adminAuth, async (req, res) => {
   try {
     const t = await Testimonial.findByIdAndDelete(req.params.id);
     if (!t) return res.status(404).json({ success: false, message: 'Not found' });
-    if (t.avatar?.startsWith('/uploads/')) fs.unlink(path.join(uploadsDir, path.basename(t.avatar)), () => {});
     res.json({ success: true });
   } catch { res.status(500).json({ success: false, message: 'Server error' }); }
 });
@@ -492,7 +474,6 @@ router.delete('/brands/:id', adminAuth, async (req, res) => {
   try {
     const b = await Brand.findByIdAndDelete(req.params.id);
     if (!b) return res.status(404).json({ success: false, message: 'Not found' });
-    if (b.logo?.startsWith('/uploads/')) fs.unlink(path.join(uploadsDir, path.basename(b.logo)), () => {});
     res.json({ success: true });
   } catch { res.status(500).json({ success: false, message: 'Server error' }); }
 });
