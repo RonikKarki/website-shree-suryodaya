@@ -3,54 +3,108 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply font-sans text-gray-800 antialiased;
-  }
-  h1, h2, h3, h4, h5 {
-    @apply font-heading;
-  }
+  html { scroll-behavior: smooth; }
+  body { @apply font-sans text-gray-800 antialiased bg-cream-50; }
+  h1, h2, h3, h4, h5 { @apply font-heading; }
 }
 
 @layer components {
+
+  /* ── Buttons ── */
   .btn-primary {
-    @apply inline-flex items-center gap-2 bg-forest-700 hover:bg-forest-800 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    @apply inline-flex items-center gap-2 bg-forest-700 hover:bg-forest-800 text-white font-semibold px-7 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm tracking-wide;
   }
   .btn-secondary {
-    @apply inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-gray-900 font-semibold px-6 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    @apply inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white font-semibold px-7 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm tracking-wide;
   }
   .btn-outline {
-    @apply inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white hover:text-forest-800 font-semibold px-6 py-3 rounded-full transition-all duration-300;
+    @apply inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white hover:text-charcoal-900 font-semibold px-7 py-3 rounded-full transition-all duration-300 text-sm tracking-wide;
+  }
+  .btn-dark {
+    @apply inline-flex items-center gap-2 bg-charcoal-900 hover:bg-charcoal-800 text-white font-semibold px-7 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm tracking-wide;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 border border-current font-semibold px-7 py-3 rounded-full transition-all duration-300 text-sm tracking-wide hover:bg-current hover:text-white;
+  }
+
+  /* ── Typography ── */
+  .section-tag {
+    @apply inline-block text-gold-500 font-semibold uppercase tracking-[0.2em] text-xs mb-3;
   }
   .section-title {
-    @apply font-heading text-3xl md:text-4xl font-bold text-forest-800 mb-4;
+    @apply font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal-900 mb-4 leading-tight;
+  }
+  .section-title-light {
+    @apply font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight;
   }
   .section-subtitle {
-    @apply text-gray-600 text-lg max-w-2xl mx-auto;
+    @apply text-gray-500 text-lg max-w-2xl leading-relaxed;
   }
+  .section-subtitle-light {
+    @apply text-white/60 text-lg max-w-2xl leading-relaxed;
+  }
+
+  /* ── Cards ── */
   .card {
     @apply bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden;
   }
-  .tag {
-    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide;
+  .card-dark {
+    @apply bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all duration-300 overflow-hidden;
   }
+
+  /* ── Section paddings ── */
+  .section-pad { @apply py-20 lg:py-28; }
+  .section-pad-sm { @apply py-14 lg:py-20; }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #f5f0e8; }
 ::-webkit-scrollbar-thumb { background: #388e3c; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #2e7d32; }
 
-/* Fade-in on scroll utility (used with IntersectionObserver) */
+/* ── Reveal on scroll ── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
 }
 .reveal.visible {
   opacity: 1;
   transform: none;
 }
+
+/* ── Grain texture overlay ── */
+.grain-overlay {
+  position: relative;
+}
+.grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+}
+
+/* ── Marquee ── */
+.marquee-outer {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 32s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ── Line clamp ── */
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── Diagonal divider ── */
+.clip-diagonal { clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); }
+.clip-diagonal-reverse { clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 100%); }

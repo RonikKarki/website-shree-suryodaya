@@ -4,24 +4,25 @@ import axios from 'axios';
 import {
   FaPhone, FaEnvelope, FaMapMarkerAlt,
   FaFacebook, FaInstagram, FaWhatsapp, FaYoutube, FaTwitter,
+  FaArrowRight,
 } from 'react-icons/fa';
 
 const quickLinks = [
-  { to: '/',        label: 'Home' },
-  { to: '/about',   label: 'About Us' },
-  { to: '/products',label: 'Our Products' },
-  { to: '/gallery', label: 'Gallery' },
-  { to: '/blog',    label: 'News & Updates' },
-  { to: '/factory', label: 'Our Factory' },
-  { to: '/contact', label: 'Contact Us' },
+  { to: '/',         label: 'Home' },
+  { to: '/about',    label: 'About Us' },
+  { to: '/products', label: 'Our Products' },
+  { to: '/gallery',  label: 'Gallery' },
+  { to: '/blog',     label: 'News & Updates' },
+  { to: '/factory',  label: 'Our Factory' },
+  { to: '/contact',  label: 'Contact Us' },
 ];
 
 const SOCIAL_ICONS = {
-  facebook:  { Icon: FaFacebook,  label: 'Facebook' },
-  instagram: { Icon: FaInstagram, label: 'Instagram' },
-  whatsapp:  { Icon: FaWhatsapp,  label: 'WhatsApp' },
-  youtube:   { Icon: FaYoutube,   label: 'YouTube' },
-  twitter:   { Icon: FaTwitter,   label: 'Twitter / X' },
+  facebook:  { Icon: FaFacebook,  label: 'Facebook',  color: 'hover:bg-[#1877f2]' },
+  instagram: { Icon: FaInstagram, label: 'Instagram', color: 'hover:bg-[#e1306c]' },
+  whatsapp:  { Icon: FaWhatsapp,  label: 'WhatsApp',  color: 'hover:bg-[#25d366]' },
+  youtube:   { Icon: FaYoutube,   label: 'YouTube',   color: 'hover:bg-[#ff0000]' },
+  twitter:   { Icon: FaTwitter,   label: 'Twitter/X', color: 'hover:bg-[#1da1f2]' },
 };
 
 export default function Footer() {
@@ -30,9 +31,7 @@ export default function Footer() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/settings')
-      .then((r) => setSettings(r.data.data || {}))
-      .catch(() => {});
+    axios.get('/api/settings').then((r) => setSettings(r.data.data || {})).catch(() => {});
     axios.get('/api/products')
       .then((r) => setProducts((r.data.data || []).filter((p) => p.isActive).slice(0, 6)))
       .catch(() => {});
@@ -45,144 +44,147 @@ export default function Footer() {
   const email       = s.email || '';
   const address     = s.address || 'Gaindakot, Nawalpur, Gandaki Province, Nepal';
 
-  // Build social links from settings
   const socialLinks = [
-    s.facebookUrl  && { key: 'facebook',  url: s.facebookUrl },
-    s.instagramUrl && { key: 'instagram', url: s.instagramUrl },
+    s.facebookUrl   && { key: 'facebook',  url: s.facebookUrl },
+    s.instagramUrl  && { key: 'instagram', url: s.instagramUrl },
     s.whatsappNumber && {
       key: 'whatsapp',
       url: `https://wa.me/${s.whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(s.whatsappDefaultMessage || 'Hello!')}`,
     },
-    s.youtubeUrl   && { key: 'youtube',  url: s.youtubeUrl },
-    s.twitterUrl   && { key: 'twitter',  url: s.twitterUrl },
+    s.youtubeUrl    && { key: 'youtube',  url: s.youtubeUrl },
+    s.twitterUrl    && { key: 'twitter',  url: s.twitterUrl },
   ].filter(Boolean);
 
   return (
-    <footer className="bg-forest-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="bg-[#0a120b] text-white">
 
-          {/* ── Brand ── */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <img
-                src="/logo.jpg"
-                alt="Shree Suryodaya Khadya Udhyog Limited"
-                className="flex-shrink-0 object-contain rounded-full bg-white"
-                style={{ width: '52px', height: '52px' }}
-              />
-              <div>
-                <div className="font-heading font-bold text-lg text-white leading-tight">
+      {/* ── Decorative top border ── */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent" />
+
+      {/* ── Main footer body ── */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+
+          {/* ── Brand column (spans 4 cols) ── */}
+          <div className="sm:col-span-2 lg:col-span-4">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="relative">
+                <img
+                  src="/logo.jpg"
+                  alt="Shree Suryodaya"
+                  className="w-13 h-13 object-contain rounded-full"
+                  style={{ width: 52, height: 52 }}
+                />
+                <div className="absolute inset-0 rounded-full ring-2 ring-gold-500/30" />
+              </div>
+              <div className="leading-tight">
+                <div className="font-heading font-bold text-white text-base">
                   {companyName.split(' ').slice(0, 2).join(' ')}
                 </div>
-                <div className="text-xs text-white/60">
+                <div className="text-[11px] text-white/40 tracking-wide mt-0.5">
                   {companyName.split(' ').slice(2).join(' ')}
                 </div>
               </div>
             </div>
 
-            <p className="text-white/70 text-sm leading-relaxed mb-5">{tagline}</p>
+            <div className="w-12 h-px bg-gold-500/40 mb-5" />
 
-            {socialLinks.length > 0 ? (
+            <p className="text-white/50 text-sm leading-relaxed mb-6 max-w-xs">{tagline}</p>
+
+            {/* Social icons */}
+            {socialLinks.length > 0 && (
               <div className="flex gap-2 flex-wrap">
                 {socialLinks.map(({ key, url }) => {
                   const meta = SOCIAL_ICONS[key];
                   if (!meta) return null;
-                  const { Icon, label } = meta;
+                  const { Icon, label, color } = meta;
                   return (
-                    <a
-                      key={key}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <a key={key} href={url} target="_blank" rel="noopener noreferrer"
                       aria-label={label}
-                      className="w-9 h-9 bg-white/10 hover:bg-brand-500 text-white hover:text-forest-900 rounded-full flex items-center justify-center transition-all duration-200"
-                    >
-                      <Icon />
+                      className={`w-9 h-9 bg-white/8 border border-white/10 ${color} text-white rounded-full flex items-center justify-center transition-all duration-300 hover:border-transparent hover:scale-110`}>
+                      <Icon className="text-sm" />
                     </a>
                   );
                 })}
               </div>
-            ) : (
-              /* Placeholder while settings load */
+            )}
+            {socialLinks.length === 0 && (
               <div className="flex gap-2">
-                {['fb', 'wa'].map((k) => (
-                  <div key={k} className="w-9 h-9 bg-white/10 rounded-full" />
-                ))}
+                {[1, 2].map((k) => <div key={k} className="w-9 h-9 bg-white/8 rounded-full border border-white/5" />)}
               </div>
             )}
           </div>
 
-          {/* ── Quick links ── */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 uppercase tracking-wider text-sm">Quick Links</h4>
-            <ul className="space-y-2.5">
+          {/* ── Quick Links (3 cols) ── */}
+          <div className="lg:col-span-3 lg:col-start-5">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-6">
+              Quick Links
+            </h4>
+            <ul className="space-y-3">
               {quickLinks.map(({ to, label }) => (
                 <li key={to}>
-                  <Link
-                    to={to}
-                    className="text-white/70 hover:text-brand-400 text-sm transition-colors duration-200 flex items-center gap-1.5"
-                  >
-                    <span className="text-brand-500">›</span> {label}
+                  <Link to={to}
+                    className="group flex items-center gap-2 text-white/55 hover:text-gold-300 text-sm transition-colors duration-200">
+                    <FaArrowRight className="text-[8px] text-gold-500/40 group-hover:text-gold-400 group-hover:translate-x-0.5 transition-all" />
+                    {label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* ── Products ── */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 uppercase tracking-wider text-sm">Our Rice</h4>
-            <ul className="space-y-2.5">
-              {products.length > 0 ? (
-                products.map((p) => (
-                  <li key={p._id}>
-                    <Link
-                      to="/products"
-                      className="text-white/70 hover:text-brand-400 text-sm transition-colors duration-200 flex items-center gap-1.5"
-                    >
-                      <span className="text-brand-500">›</span> {p.name}
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                /* Skeleton while loading */
-                [...Array(5)].map((_, i) => (
-                  <li key={i} className="h-4 bg-white/10 rounded animate-pulse w-3/4" />
-                ))
-              )}
+          {/* ── Products (2 cols) ── */}
+          <div className="lg:col-span-2">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-6">
+              Our Rice
+            </h4>
+            <ul className="space-y-3">
+              {products.length > 0 ? products.map((p) => (
+                <li key={p._id}>
+                  <Link to="/products"
+                    className="group flex items-center gap-2 text-white/55 hover:text-gold-300 text-sm transition-colors duration-200">
+                    <FaArrowRight className="text-[8px] text-gold-500/40 group-hover:text-gold-400 group-hover:translate-x-0.5 transition-all" />
+                    {p.name}
+                  </Link>
+                </li>
+              )) : [...Array(4)].map((_, i) => (
+                <li key={i} className="h-3 bg-white/8 rounded animate-pulse" style={{ width: `${60 + i * 5}%` }} />
+              ))}
             </ul>
           </div>
 
-          {/* ── Contact ── */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 uppercase tracking-wider text-sm">Contact Us</h4>
+          {/* ── Contact (3 cols) ── */}
+          <div className="lg:col-span-3">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-6">
+              Contact
+            </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <FaMapMarkerAlt className="text-brand-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/70 text-sm">{address}</span>
+              <li className="flex items-start gap-3 group">
+                <div className="w-8 h-8 bg-white/5 border border-white/8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:border-gold-500/30 transition-colors">
+                  <FaMapMarkerAlt className="text-gold-500/60 text-xs" />
+                </div>
+                <span className="text-white/50 text-sm leading-relaxed pt-1">{address}</span>
               </li>
               {phone && (
-                <li className="flex items-center gap-3">
-                  <FaPhone className="text-brand-400 flex-shrink-0" />
-                  <a href={`tel:${phone}`} className="text-white/70 hover:text-brand-400 text-sm transition-colors">
-                    {phone}
-                  </a>
+                <li className="flex items-center gap-3 group">
+                  <div className="w-8 h-8 bg-white/5 border border-white/8 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:border-gold-500/30 transition-colors">
+                    <FaPhone className="text-gold-500/60 text-xs" />
+                  </div>
+                  <a href={`tel:${phone}`} className="text-white/50 hover:text-gold-300 text-sm transition-colors">{phone}</a>
                 </li>
               )}
               {email && (
-                <li className="flex items-start gap-3">
-                  <FaEnvelope className="text-brand-400 mt-0.5 flex-shrink-0" />
-                  <a href={`mailto:${email}`} className="text-white/70 hover:text-brand-400 text-sm transition-colors break-all">
-                    {email}
-                  </a>
+                <li className="flex items-start gap-3 group">
+                  <div className="w-8 h-8 bg-white/5 border border-white/8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:border-gold-500/30 transition-colors">
+                    <FaEnvelope className="text-gold-500/60 text-xs" />
+                  </div>
+                  <a href={`mailto:${email}`} className="text-white/50 hover:text-gold-300 text-sm transition-colors break-all pt-1">{email}</a>
                 </li>
               )}
               {!phone && !email && !settings && (
-                /* Skeleton */
                 <>
-                  <li className="h-4 bg-white/10 rounded animate-pulse w-4/5" />
-                  <li className="h-4 bg-white/10 rounded animate-pulse w-3/5" />
+                  <li className="h-3 bg-white/8 rounded animate-pulse w-4/5" />
+                  <li className="h-3 bg-white/8 rounded animate-pulse w-3/5" />
                 </>
               )}
             </ul>
@@ -190,15 +192,16 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
-          <p className="text-white/50 text-sm">
+      {/* ── Bottom bar ── */}
+      <div className="border-t border-white/6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-white/30 text-xs">
             © {year} {companyName}. All rights reserved.
           </p>
-          <p className="text-white/35 text-xs">
-            {s.address ? s.address.split(',').slice(-2).join(',').trim() : 'Gaindakot, Nawalpur, Nepal'}
-          </p>
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-gold-500/50" />
+            <p className="text-white/20 text-xs">Gaindakot, Nawalpur, Nepal</p>
+          </div>
         </div>
       </div>
     </footer>
