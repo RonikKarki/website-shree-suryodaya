@@ -12,28 +12,31 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled]     = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const location                    = useLocation();
-  const isHome                      = location.pathname === '/';
+  const [scrollY, setScrollY]        = useState(0);
+  const [mobileOpen, setMobileOpen]  = useState(false);
+  const location                     = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrollY(window.scrollY);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => { setMobileOpen(false); }, [location]);
 
-  const transparent = isHome && !scrolled;
+  // 0 at top → 1 fully faded in by 120px scroll
+  const p = Math.min(scrollY / 120, 1);
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        transparent
-          ? 'bg-sand-100/80 backdrop-blur-sm'
-          : 'glass shadow-[0_1px_0_0_rgba(228,222,211,0.7)]'
-      }`}>
+      <header
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
+        style={{
+          backgroundColor: `rgba(248, 246, 241, ${p * 0.93})`,
+          boxShadow: p > 0.05 ? `0 1px 0 rgba(228,222,211,${p * 0.8})` : 'none',
+        }}
+      >
         <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
 
           {/* Logo */}
