@@ -30,7 +30,12 @@ app.use(helmet({
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? (process.env.CLIENT_URL || '').split(',').map((s) => s.trim()).filter(Boolean)
+  ? [
+      'https://shreesuryodayakhadyaudhyog.com.np',
+      'https://www.shreesuryodayakhadyaudhyog.com.np',
+      'https://website-shree-suryodaya.vercel.app',
+      ...(process.env.CLIENT_URL || '').split(',').map((s) => s.trim()).filter(Boolean),
+    ]
   : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
 
 app.use(cors({ origin: allowedOrigins, credentials: true }));
