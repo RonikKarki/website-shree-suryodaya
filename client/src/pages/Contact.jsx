@@ -261,33 +261,108 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ── MAP ── */}
-      <section className="bg-sand-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-          <SectionReveal className="text-center mb-6">
-            <h2 className="font-heading text-2xl font-bold text-ink-900">Find Us in Gaindakot</h2>
+      {/* ── LOCATIONS ── */}
+      <section className="bg-sand-200 section-pad-sm">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <SectionReveal className="text-center mb-10">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="w-8 h-px bg-gold-500" />
+              <span className="section-tag">Our Locations</span>
+              <div className="w-8 h-px bg-gold-500" />
+            </div>
+            <h2 className="font-heading text-3xl font-bold text-ink-900">Find Us</h2>
           </SectionReveal>
-          <div className="rounded-2xl overflow-hidden shadow-lg h-80 bg-sand-100 border border-sand-300">
-            {d?.mapEmbedUrl ? (
-              <iframe src={d.mapEmbedUrl} width="100%" height="100%" style={{ border: 0 }}
-                allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                title="Shree Suryodaya location" />
-            ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                <div className="text-6xl">🗺️</div>
-                <div className="text-center">
-                  <p className="font-semibold text-ink-800">Gaindakot, Nawalpur, Nepal</p>
-                  <p className="text-ink-500 text-sm">Gandaki Province</p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Head Office */}
+            <SectionReveal direction="left">
+              <div className="bg-white rounded-2xl border border-sand-300 overflow-hidden shadow-sm h-full flex flex-col">
+                <div className="px-6 pt-6 pb-4 flex items-center gap-3 border-b border-sand-200">
+                  <div className="w-10 h-10 bg-gold-100 border border-gold-200 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span className="text-lg">🏢</span>
+                  </div>
+                  <div>
+                    <p className="font-heading font-bold text-ink-900 text-base leading-tight">Head Office</p>
+                    <p className="text-ink-400 text-xs mt-0.5">
+                      {d?.headOffice?.address || 'Gaindakot, Nawalpur, Gandaki Province, Nepal'}
+                    </p>
+                  </div>
+                  {(d?.headOffice?.mapLinkUrl || d?.mapLinkUrl) && (
+                    <a href={d?.headOffice?.mapLinkUrl || d?.mapLinkUrl}
+                      target="_blank" rel="noopener noreferrer"
+                      className="ml-auto flex items-center gap-1.5 text-gold-600 hover:text-gold-700 text-xs font-semibold transition-colors flex-shrink-0">
+                      <FaExternalLinkAlt className="text-[10px]" /> Maps
+                    </a>
+                  )}
                 </div>
-                <a href={d?.mapLinkUrl || 'https://maps.google.com/?q=Gaindakot+Nawalpur+Nepal'}
-                  target="_blank" rel="noopener noreferrer" className="btn-primary text-sm">
-                  <FaExternalLinkAlt className="text-xs" /> Open in Google Maps
-                </a>
-                {!d?.mapEmbedUrl && (
-                  <p className="text-xs text-ink-400">Add a Google Maps embed URL in the admin panel to show an interactive map here.</p>
-                )}
+                <div className="flex-1 min-h-[260px]">
+                  {d?.headOffice?.mapEmbedUrl ? (
+                    <iframe src={d.headOffice.mapEmbedUrl} width="100%" height="100%"
+                      style={{ border: 0, display: 'block', minHeight: 260 }}
+                      allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                      title="Head Office location" />
+                  ) : (
+                    <div className="w-full h-full min-h-[260px] bg-sand-100 flex flex-col items-center justify-center gap-3 p-6 text-center">
+                      <span className="text-5xl opacity-20">🗺️</span>
+                      <p className="text-ink-500 text-sm">
+                        {d?.headOffice?.address || 'Gaindakot, Nawalpur, Gandaki Province, Nepal'}
+                      </p>
+                      <a href={d?.headOffice?.mapLinkUrl || 'https://maps.google.com/?q=Gaindakot+Nawalpur+Nepal'}
+                        target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-gold-600 hover:text-gold-700 text-sm font-semibold border border-gold-300 hover:bg-gold-50 px-4 py-2 rounded-full transition-all">
+                        <FaExternalLinkAlt className="text-xs" /> Open in Google Maps
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
+            </SectionReveal>
+
+            {/* Factory */}
+            <SectionReveal direction="right" delay={80}>
+              <div className="bg-white rounded-2xl border border-sand-300 overflow-hidden shadow-sm h-full flex flex-col">
+                <div className="px-6 pt-6 pb-4 flex items-center gap-3 border-b border-sand-200">
+                  <div className="w-10 h-10 bg-sage-100 border border-sage-200 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span className="text-lg">🏭</span>
+                  </div>
+                  <div>
+                    <p className="font-heading font-bold text-ink-900 text-base leading-tight">Factory</p>
+                    <p className="text-ink-400 text-xs mt-0.5">
+                      {d?.factory?.address || d?.address?.city
+                        ? [d?.factory?.address || [d?.address?.city, d?.address?.district].filter(Boolean).join(', '), d?.address?.province || 'Gandaki Province', 'Nepal'].filter(Boolean).join(', ')
+                        : 'Gaindakot, Nawalpur, Gandaki Province, Nepal'}
+                    </p>
+                  </div>
+                  {(d?.factory?.mapLinkUrl || d?.mapLinkUrl) && (
+                    <a href={d?.factory?.mapLinkUrl || d?.mapLinkUrl}
+                      target="_blank" rel="noopener noreferrer"
+                      className="ml-auto flex items-center gap-1.5 text-gold-600 hover:text-gold-700 text-xs font-semibold transition-colors flex-shrink-0">
+                      <FaExternalLinkAlt className="text-[10px]" /> Maps
+                    </a>
+                  )}
+                </div>
+                <div className="flex-1 min-h-[260px]">
+                  {(d?.factory?.mapEmbedUrl || d?.mapEmbedUrl) ? (
+                    <iframe src={d?.factory?.mapEmbedUrl || d?.mapEmbedUrl} width="100%" height="100%"
+                      style={{ border: 0, display: 'block', minHeight: 260 }}
+                      allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                      title="Factory location" />
+                  ) : (
+                    <div className="w-full h-full min-h-[260px] bg-sand-100 flex flex-col items-center justify-center gap-3 p-6 text-center">
+                      <span className="text-5xl opacity-20">🗺️</span>
+                      <p className="text-ink-500 text-sm">
+                        {d?.factory?.address || 'Gaindakot, Nawalpur, Gandaki Province, Nepal'}
+                      </p>
+                      <a href={d?.factory?.mapLinkUrl || d?.mapLinkUrl || 'https://maps.google.com/?q=Gaindakot+Nawalpur+Nepal'}
+                        target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-gold-600 hover:text-gold-700 text-sm font-semibold border border-gold-300 hover:bg-gold-50 px-4 py-2 rounded-full transition-all">
+                        <FaExternalLinkAlt className="text-xs" /> Open in Google Maps
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </SectionReveal>
           </div>
         </div>
       </section>

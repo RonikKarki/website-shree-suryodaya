@@ -38,11 +38,12 @@ export default function Footer() {
   }, []);
 
   const s = settings || {};
-  const companyName = s.companyName || 'Shree Suryodaya Khadya Udhyog Limited';
-  const tagline     = s.tagline    || "Nepal's Finest Rice, Milled with Pride";
-  const phone       = s.phoneNumber || '';
-  const email       = s.email      || '';
-  const address     = s.address    || 'Gaindakot, Nawalpur, Gandaki Province, Nepal';
+  const companyName    = s.companyName    || 'Shree Suryodaya Khadya Udhyog Limited';
+  const tagline        = s.tagline        || "Nepal's Finest Rice, Milled with Pride";
+  const phone          = s.phoneNumber    || '';
+  const email          = s.email          || '';
+  const factoryAddress = s.address        || 'Gaindakot, Nawalpur, Gandaki Province, Nepal';
+  const headOfficeAddress = s.headOfficeAddress || '';
 
   const socialLinks = [
     s.facebookUrl   && { key: 'facebook',  url: s.facebookUrl },
@@ -146,12 +147,28 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/35 mb-6">Contact</h4>
             <ul className="space-y-4">
+              {/* Factory address */}
               <li className="flex items-start gap-3 group">
                 <div className="w-8 h-8 bg-white/5 border border-white/8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:border-gold-500/30 transition-colors">
-                  <FaMapMarkerAlt className="text-gold-500/60 text-xs" />
+                  <span className="text-[11px]">🏭</span>
                 </div>
-                <span className="text-white/50 text-sm leading-relaxed">{address}</span>
+                <div>
+                  <p className="text-white/30 text-[10px] uppercase tracking-wider mb-0.5">Factory</p>
+                  <span className="text-white/50 text-sm leading-relaxed">{factoryAddress}</span>
+                </div>
               </li>
+              {/* Head office address */}
+              {headOfficeAddress && (
+                <li className="flex items-start gap-3 group">
+                  <div className="w-8 h-8 bg-white/5 border border-white/8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:border-gold-500/30 transition-colors">
+                    <span className="text-[11px]">🏢</span>
+                  </div>
+                  <div>
+                    <p className="text-white/30 text-[10px] uppercase tracking-wider mb-0.5">Head Office</p>
+                    <span className="text-white/50 text-sm leading-relaxed">{headOfficeAddress}</span>
+                  </div>
+                </li>
+              )}
               {phone && (
                 <li className="flex items-center gap-3 group">
                   <div className="w-8 h-8 bg-white/5 border border-white/8 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:border-gold-500/30 transition-colors">
