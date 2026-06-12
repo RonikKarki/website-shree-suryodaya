@@ -31,7 +31,7 @@ export default function Navbar() {
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         transparent
-          ? 'bg-transparent'
+          ? 'bg-sand-100/80 backdrop-blur-sm'
           : 'glass shadow-[0_1px_0_0_rgba(228,222,211,0.7)]'
       }`}>
         <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
@@ -47,14 +47,10 @@ export default function Navbar() {
               <div className="absolute inset-0 rounded-full ring-2 ring-gold-500/0 group-hover:ring-gold-400/50 transition-all duration-300" />
             </div>
             <div className="leading-none">
-              <div className={`font-heading font-bold text-[15px] tracking-tight transition-colors duration-300 ${
-                transparent ? 'text-white' : 'text-ink-900'
-              }`}>
+              <div className="font-heading font-bold text-[15px] tracking-tight text-ink-900">
                 Shree Suryodaya
               </div>
-              <div className={`text-[10px] tracking-widest uppercase mt-0.5 hidden sm:block transition-colors duration-300 ${
-                transparent ? 'text-white/55' : 'text-ink-400'
-              }`}>
+              <div className="text-[10px] tracking-widest uppercase mt-0.5 hidden sm:block text-ink-400">
                 Khadya Udhyog Limited
               </div>
             </div>
@@ -69,9 +65,7 @@ export default function Navbar() {
                 end={to === '/'}
                 className={({ isActive }) =>
                   `relative px-4 py-2 text-[13px] font-medium tracking-wide transition-colors duration-200 group ${
-                    isActive
-                      ? transparent ? 'text-gold-300' : 'text-gold-600'
-                      : transparent ? 'text-white/80 hover:text-white' : 'text-ink-600 hover:text-ink-900'
+                    isActive ? 'text-gold-600' : 'text-ink-600 hover:text-ink-900'
                   }`
                 }
               >
@@ -93,21 +87,13 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-2.5">
             <a
               href="tel:+977"
-              className={`flex items-center gap-1.5 text-[13px] font-semibold px-4 py-2 rounded-full border transition-all duration-300 ${
-                transparent
-                  ? 'border-white/35 text-white hover:bg-white/10'
-                  : 'border-sand-300 text-ink-600 hover:border-gold-400 hover:text-gold-600'
-              }`}
+              className="flex items-center gap-1.5 text-[13px] font-semibold px-4 py-2 rounded-full border border-sand-300 text-ink-600 hover:border-gold-400 hover:text-gold-600 transition-all duration-300"
             >
               <FaPhone className="text-[10px]" /> Call Us
             </a>
             <Link
               to="/contact"
-              className={`flex items-center gap-1.5 text-[13px] font-semibold px-5 py-2.5 rounded-full transition-all duration-300 shadow-sm ${
-                transparent
-                  ? 'bg-white text-ink-900 hover:bg-gold-100'
-                  : 'bg-gold-500 text-white hover:bg-gold-600'
-              }`}
+              className="flex items-center gap-1.5 text-[13px] font-semibold px-5 py-2.5 rounded-full bg-gold-500 text-white hover:bg-gold-600 transition-all duration-300 shadow-sm"
             >
               Get Quote
             </Link>
@@ -116,9 +102,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={`md:hidden p-2 rounded-lg transition-colors ${
-              transparent ? 'text-white hover:bg-white/10' : 'text-ink-700 hover:bg-sand-200'
-            }`}
+            className="md:hidden p-2 rounded-lg text-ink-700 hover:bg-sand-200 transition-colors"
             aria-label="Open menu"
           >
             <FaBars size={22} />
