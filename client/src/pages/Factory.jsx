@@ -6,7 +6,7 @@ import SectionReveal from '../components/SectionReveal';
 import useSEO from '../hooks/useSEO';
 
 function SkeletonBlock({ h = 'h-6', w = 'w-full', className = '' }) {
-  return <div className={`${h} ${w} bg-gray-100 rounded-xl animate-pulse ${className}`} />;
+  return <div className={`${h} ${w} bg-sand-200 rounded-xl animate-pulse ${className}`} />;
 }
 
 export default function Factory() {
@@ -15,7 +15,7 @@ export default function Factory() {
     description: 'Explore the Shree Suryodaya rice milling facility in Gaindakot, Nawalpur — 50 MT/day capacity, modern machinery, and rigorous quality control.',
   });
 
-  const [data, setData] = useState(null);
+  const [data, setData]     = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,13 +28,13 @@ export default function Factory() {
   if (loading) {
     return (
       <>
-        <div className="bg-gradient-to-br from-forest-900 to-forest-800 pt-32 pb-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-            <SkeletonBlock h="h-10" w="w-64" className="mx-auto bg-white/10" />
-            <SkeletonBlock h="h-5" w="w-96" className="mx-auto bg-white/10" />
+        <div className="bg-sand-200 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center space-y-4">
+            <SkeletonBlock h="h-10" w="w-64" className="mx-auto" />
+            <SkeletonBlock h="h-5" w="w-96" className="mx-auto" />
           </div>
         </div>
-        <div className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="py-16 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
             {[...Array(6)].map((_, i) => <SkeletonBlock key={i} h="h-28" />)}
           </div>
@@ -57,21 +57,25 @@ export default function Factory() {
 
       {/* ── Capacity cards ── */}
       {capacity?.items?.length > 0 && (
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section-pad bg-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="text-center mb-12">
               {capacity.sectionTag && (
-                <p className="text-brand-600 font-semibold uppercase tracking-widest text-sm mb-2">{capacity.sectionTag}</p>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="w-8 h-px bg-gold-500" />
+                  <span className="section-tag">{capacity.sectionTag}</span>
+                  <div className="w-8 h-px bg-gold-500" />
+                </div>
               )}
-              <h2 className="section-title">{capacity.title}</h2>
+              <h2 className="section-title mx-auto">{capacity.title}</h2>
             </SectionReveal>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
               {capacity.items.map(({ id, label, value, icon }, i) => (
                 <SectionReveal key={id} delay={i * 60}>
-                  <div className="bg-forest-50 rounded-2xl p-5 text-center hover:bg-forest-100 transition-colors h-full">
+                  <div className="bg-sand-100 border border-sand-300 hover:border-gold-400 rounded-2xl p-5 text-center transition-all duration-300 hover:shadow-md h-full">
                     <div className="text-3xl mb-2">{icon}</div>
-                    <div className="font-heading font-bold text-forest-800 text-xl">{value}</div>
-                    <div className="text-gray-500 text-xs mt-1 leading-tight">{label}</div>
+                    <div className="font-heading font-bold text-ink-800 text-xl">{value}</div>
+                    <div className="text-ink-400 text-xs mt-1 leading-tight">{label}</div>
                   </div>
                 </SectionReveal>
               ))}
@@ -82,25 +86,29 @@ export default function Factory() {
 
       {/* ── Milling process ── */}
       {process?.steps?.length > 0 && (
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section-pad bg-sand-100">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="text-center mb-14">
               {process.sectionTag && (
-                <p className="text-brand-600 font-semibold uppercase tracking-widest text-sm mb-2">{process.sectionTag}</p>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="w-8 h-px bg-gold-500" />
+                  <span className="section-tag">{process.sectionTag}</span>
+                  <div className="w-8 h-px bg-gold-500" />
+                </div>
               )}
-              <h2 className="section-title">{process.title}</h2>
-              {process.subtitle && <p className="section-subtitle mx-auto">{process.subtitle}</p>}
+              <h2 className="section-title mx-auto">{process.title}</h2>
+              {process.subtitle && <p className="section-subtitle mt-4 mx-auto text-center">{process.subtitle}</p>}
             </SectionReveal>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {process.steps.map(({ id, step, title, desc, icon }, i) => (
                 <SectionReveal key={id} delay={i * 70}>
-                  <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow h-full relative overflow-hidden group">
-                    <div className="absolute top-3 right-4 font-heading font-bold text-6xl text-gray-50 select-none group-hover:text-forest-50 transition-colors">
+                  <div className="bg-white border border-sand-300 hover:border-gold-400 rounded-2xl p-6 hover:shadow-md transition-all duration-300 h-full relative overflow-hidden group">
+                    <div className="absolute top-3 right-4 font-heading font-bold text-6xl text-sand-200 select-none group-hover:text-sand-300 transition-colors">
                       {step}
                     </div>
                     <div className="text-4xl mb-4 relative">{icon}</div>
-                    <h3 className="font-heading font-bold text-forest-800 mb-2 relative">{title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed relative">{desc}</p>
+                    <h3 className="font-heading font-bold text-ink-900 mb-2 relative">{title}</h3>
+                    <p className="text-ink-500 text-sm leading-relaxed relative">{desc}</p>
                   </div>
                 </SectionReveal>
               ))}
@@ -111,18 +119,22 @@ export default function Factory() {
 
       {/* ── Machinery table ── */}
       {machinery?.items?.length > 0 && (
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section-pad bg-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="text-center mb-12">
               {machinery.sectionTag && (
-                <p className="text-brand-600 font-semibold uppercase tracking-widest text-sm mb-2">{machinery.sectionTag}</p>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="w-8 h-px bg-gold-500" />
+                  <span className="section-tag">{machinery.sectionTag}</span>
+                  <div className="w-8 h-px bg-gold-500" />
+                </div>
               )}
-              <h2 className="section-title">{machinery.title}</h2>
-              {machinery.subtitle && <p className="section-subtitle mx-auto">{machinery.subtitle}</p>}
+              <h2 className="section-title mx-auto">{machinery.title}</h2>
+              {machinery.subtitle && <p className="section-subtitle mt-4 mx-auto text-center">{machinery.subtitle}</p>}
             </SectionReveal>
-            <div className="overflow-x-auto rounded-2xl shadow-sm border border-gray-100">
+            <div className="overflow-x-auto rounded-2xl border border-sand-300">
               <table className="w-full text-sm">
-                <thead className="bg-forest-700 text-white">
+                <thead className="bg-sage-700 text-white">
                   <tr>
                     <th className="px-6 py-4 text-left font-semibold">Machine</th>
                     <th className="px-6 py-4 text-left font-semibold">Quantity</th>
@@ -130,13 +142,13 @@ export default function Factory() {
                     <th className="px-6 py-4 text-left font-semibold">Purpose</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-sand-200">
                   {machinery.items.map(({ id, name, qty, spec, purpose }, i) => (
-                    <tr key={id} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="px-6 py-4 font-medium text-forest-800">{name}</td>
-                      <td className="px-6 py-4 text-gray-600">{qty}</td>
-                      <td className="px-6 py-4 text-gray-500 hidden sm:table-cell">{spec}</td>
-                      <td className="px-6 py-4 text-gray-600">{purpose}</td>
+                    <tr key={id} className={i % 2 === 0 ? 'bg-white' : 'bg-sand-50'}>
+                      <td className="px-6 py-4 font-medium text-ink-800">{name}</td>
+                      <td className="px-6 py-4 text-ink-500">{qty}</td>
+                      <td className="px-6 py-4 text-ink-400 hidden sm:table-cell">{spec}</td>
+                      <td className="px-6 py-4 text-ink-500">{purpose}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -147,24 +159,27 @@ export default function Factory() {
       )}
 
       {/* ── Quality assurance ── */}
-      <section className="py-16 bg-forest-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section-pad bg-ink-900 grain-overlay text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
-            <SectionReveal>
+            <SectionReveal direction="left">
               {quality?.sectionTag && (
-                <p className="text-brand-300 font-semibold uppercase tracking-widest text-sm mb-3">{quality.sectionTag}</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-6 h-px bg-gold-500/50" />
+                  <span className="text-gold-400 text-[11px] font-semibold uppercase tracking-[0.25em]">{quality.sectionTag}</span>
+                </div>
               )}
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-6">
+              <h2 className="section-title-light mb-6">
                 {quality?.title || 'Every Batch Tested. Every Bag Guaranteed.'}
               </h2>
               {quality?.description && (
-                <p className="text-white/75 leading-relaxed mb-8">{quality.description}</p>
+                <p className="text-white/70 leading-relaxed mb-8">{quality.description}</p>
               )}
               {quality?.checklist?.length > 0 && (
                 <ul className="space-y-4">
                   {quality.checklist.map(({ id, text }) => (
-                    <li key={id} className="flex items-start gap-3 text-white/85">
-                      <FaCheckCircle className="text-brand-400 mt-0.5 flex-shrink-0" />
+                    <li key={id} className="flex items-start gap-3 text-white/80">
+                      <FaCheckCircle className="text-gold-400 mt-0.5 flex-shrink-0" />
                       <span>{text}</span>
                     </li>
                   ))}
@@ -173,13 +188,13 @@ export default function Factory() {
             </SectionReveal>
 
             {quality?.cards?.length > 0 && (
-              <SectionReveal delay={150}>
+              <SectionReveal direction="right" delay={150}>
                 <div className="grid grid-cols-2 gap-5">
                   {quality.cards.map(({ id, emoji, title, desc }) => (
-                    <div key={id} className="bg-white/10 border border-white/20 rounded-2xl p-5 hover:bg-white/15 transition-colors">
+                    <div key={id} className="bg-white/8 border border-white/12 rounded-2xl p-5 hover:bg-white/12 transition-colors">
                       <div className="text-3xl mb-3">{emoji}</div>
                       <h4 className="font-semibold text-white mb-2">{title}</h4>
-                      <p className="text-white/65 text-sm">{desc}</p>
+                      <p className="text-white/60 text-sm">{desc}</p>
                     </div>
                   ))}
                 </div>
@@ -190,44 +205,37 @@ export default function Factory() {
       </section>
 
       {/* ── Location / Map ── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section-pad bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <SectionReveal className="text-center mb-12">
             {location?.sectionTag && (
-              <p className="text-brand-600 font-semibold uppercase tracking-widest text-sm mb-2">{location.sectionTag}</p>
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <div className="w-8 h-px bg-gold-500" />
+                <span className="section-tag">{location.sectionTag}</span>
+                <div className="w-8 h-px bg-gold-500" />
+              </div>
             )}
-            <h2 className="section-title">{location?.title || 'Find Our Mill'}</h2>
-            {location?.subtitle && <p className="section-subtitle mx-auto">{location.subtitle}</p>}
+            <h2 className="section-title mx-auto">{location?.title || 'Find Our Mill'}</h2>
+            {location?.subtitle && <p className="section-subtitle mt-4 mx-auto text-center">{location.subtitle}</p>}
           </SectionReveal>
 
-          <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+          <div className="rounded-2xl overflow-hidden border border-sand-300">
             {location?.mapEmbedUrl ? (
-              <iframe
-                src={location.mapEmbedUrl}
-                width="100%"
-                height="360"
-                style={{ border: 0, display: 'block' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Shree Suryodaya Factory location"
-              />
+              <iframe src={location.mapEmbedUrl} width="100%" height="360" style={{ border: 0, display: 'block' }}
+                allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                title="Shree Suryodaya Factory location" />
             ) : (
-              <div className="h-80 bg-gradient-to-br from-forest-50 to-forest-100 flex flex-col items-center justify-center text-center p-8">
+              <div className="h-80 bg-sand-100 flex flex-col items-center justify-center text-center p-8">
                 <div className="text-6xl mb-4">📍</div>
-                <h3 className="font-heading font-bold text-forest-800 text-xl mb-2">
+                <h3 className="font-heading font-bold text-ink-900 text-xl mb-2">
                   Shree Suryodaya Khadya Udhyog Limited
                 </h3>
-                <p className="text-forest-600 mb-5">{location?.address || 'Gaindakot, Nawalpur, Gandaki Province, Nepal'}</p>
-                <a
-                  href={location?.mapLinkUrl || 'https://maps.google.com/?q=Gaindakot,Nawalpur,Nepal'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary text-sm"
-                >
+                <p className="text-ink-500 mb-5">{location?.address || 'Gaindakot, Nawalpur, Gandaki Province, Nepal'}</p>
+                <a href={location?.mapLinkUrl || 'https://maps.google.com/?q=Gaindakot,Nawalpur,Nepal'}
+                  target="_blank" rel="noopener noreferrer" className="btn-primary text-sm">
                   <FaExternalLinkAlt className="text-xs" /> Open in Google Maps
                 </a>
-                <p className="text-xs text-gray-400 mt-4">
+                <p className="text-xs text-ink-400 mt-4">
                   Add a Google Maps embed URL in Admin → Our Factory to show an interactive map here.
                 </p>
               </div>

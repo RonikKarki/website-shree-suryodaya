@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 
-export default function SectionReveal({ children, className = '', delay = 0 }) {
+// direction: 'up' | 'left' | 'right' | 'fade'
+export default function SectionReveal({ children, className = '', delay = 0, direction = 'up' }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -14,14 +15,20 @@ export default function SectionReveal({ children, className = '', delay = 0 }) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.10 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [delay]);
 
+  const cls =
+    direction === 'left' ? 'reveal-left' :
+    direction === 'right' ? 'reveal-right' :
+    direction === 'fade'  ? 'reveal-fade' :
+    'reveal';
+
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <div ref={ref} className={`${cls} ${className}`}>
       {children}
     </div>
   );

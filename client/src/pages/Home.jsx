@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowRight, FaStar, FaQuoteLeft, FaWhatsapp, FaLeaf, FaPhone } from 'react-icons/fa';
+import { FaArrowRight, FaStar, FaQuoteLeft, FaWhatsapp, FaPhone, FaCheckCircle } from 'react-icons/fa';
 import axios from 'axios';
 import useSEO from '../hooks/useSEO';
 import BrandCard from '../components/BrandCard';
@@ -10,25 +10,25 @@ import StatCounter from '../components/StatCounter';
 import ProductCard from '../components/ProductCard';
 import SectionReveal from '../components/SectionReveal';
 
-// ── Marquee ticker ────────────────────────────────────────────────────────────
+// ── Ticker ────────────────────────────────────────────────────────────────────
 const TICKER_ITEMS = [
   '🌾 Premium Quality Rice',
-  '✦ 50 MT Daily Capacity',
-  '✦ Since 2009',
-  '✦ Gaindakot, Nawalpur',
-  '✦ Optical Sorting Technology',
-  '✦ Nepal\'s Finest Mill',
-  '✦ Trusted Across Nepal',
-  '🌾 Milled with Pride',
+  '✦ Since 2009 · Gaindakot, Nepal',
+  '✦ 50 MT Daily Milling Capacity',
+  '✦ 10,000+ Satisfied Customers',
+  '✦ Modern Optical Sorting Technology',
+  '✦ 100% Natural Processing',
+  '✦ Wholesale & Retail Supply',
+  '🌾 Nepal\'s Finest Rice Mill',
 ];
 
 function Ticker() {
   const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
   return (
-    <div className="bg-gold-500 py-3 marquee-outer overflow-hidden">
+    <div className="bg-ink-900 py-3.5 marquee-outer overflow-hidden border-b border-white/5">
       <div className="marquee-track">
         {doubled.map((item, i) => (
-          <span key={i} className="inline-flex items-center text-white font-semibold text-sm tracking-wide mx-8">
+          <span key={i} className="inline-flex items-center text-white/80 text-[13px] font-medium tracking-wide mx-8">
             {item}
           </span>
         ))}
@@ -37,18 +37,18 @@ function Ticker() {
   );
 }
 
-// ── Bento gallery item ─────────────────────────────────────────────────────────
+// ── Gallery Bento item ────────────────────────────────────────────────────────
 function BentoItem({ src, caption, className = '' }) {
   return (
-    <div className={`relative group overflow-hidden rounded-2xl bg-gray-200 ${className}`}>
+    <div className={`relative group overflow-hidden rounded-2xl bg-sand-300 ${className}`}>
       {src ? (
-        <img src={resolveUrl(src)} alt={caption || ''} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        <img src={resolveUrl(src)} alt={caption || ''} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
       ) : (
-        <div className="w-full h-full bg-gradient-to-br from-forest-800 to-charcoal-900 flex items-center justify-center">
-          <FaLeaf className="text-forest-400 text-4xl opacity-40" />
+        <div className="w-full h-full bg-gradient-to-br from-sage-100 to-sand-200 flex items-center justify-center">
+          <span className="text-4xl opacity-30 select-none">🌾</span>
         </div>
       )}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-500" />
+      <div className="absolute inset-0 bg-ink-900/0 group-hover:bg-ink-900/25 transition-all duration-400" />
       {caption && (
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-400">
           <p className="text-white text-sm font-medium">{caption}</p>
@@ -58,23 +58,22 @@ function BentoItem({ src, caption, className = '' }) {
   );
 }
 
-// ── CTA bg map ────────────────────────────────────────────────────────────────
 const ctaBgMap = {
-  green: 'bg-[#0D1B0E]',
-  gold:  'bg-gradient-to-r from-gold-600 to-gold-500',
-  dark:  'bg-charcoal-900',
+  green: 'bg-sage-900',
+  gold:  'bg-gradient-to-br from-gold-600 to-gold-700',
+  dark:  'bg-ink-900',
 };
 
-// ── Main component ─────────────────────────────────────────────────────────────
+// ── Main ──────────────────────────────────────────────────────────────────────
 export default function Home() {
-  useSEO({ description: 'Shree Suryodaya Khadya Udhyog Limited — Premium rice milling in Gaindakot, Nawalpur. Finest quality rice milled with pride. Trusted across Nepal since 2009.' });
+  useSEO({ description: 'Shree Suryodaya Khadya Udhyog Limited — Premium rice milling in Gaindakot, Nawalpur. Finest quality rice milled with pride since 2009.' });
 
-  const [content, setContent]         = useState(null);
-  const [products, setProducts]       = useState([]);
-  const [settings, setSettings]       = useState({});
+  const [content, setContent]           = useState(null);
+  const [products, setProducts]         = useState([]);
+  const [settings, setSettings]         = useState({});
   const [testimonials, setTestimonials] = useState([]);
-  const [brands, setBrands]           = useState([]);
-  const [loading, setLoading]         = useState(true);
+  const [brands, setBrands]             = useState([]);
+  const [loading, setLoading]           = useState(true);
 
   useEffect(() => {
     Promise.all([
@@ -89,15 +88,15 @@ export default function Home() {
       setSettings(settingsRes.data.data || {});
       setTestimonials(testRes.data.data || []);
       setBrands(brandRes.data.data || []);
-    }).catch((err) => console.error(err)).finally(() => setLoading(false));
+    }).catch(console.error).finally(() => setLoading(false));
   }, []);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-charcoal-900">
+      <div className="min-h-screen flex items-center justify-center bg-sand-100">
         <div className="text-center">
-          <div className="w-16 h-16 border-2 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/40 text-sm tracking-widest uppercase">Loading</p>
+          <div className="w-14 h-14 border-2 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-ink-400 text-sm tracking-widest uppercase">Loading</p>
         </div>
       </div>
     );
@@ -106,97 +105,86 @@ export default function Home() {
   if (!content) return null;
 
   const { hero, companyIntro, whyChooseUs, process, featuredProducts, stats, gallery, brandsSection, testimonialsSection, cta } = content;
-  const displayedProducts = products.slice(0, featuredProducts?.limit || 3);
-  const whatsappNumber = settings.whatsappNumber || '';
+  const displayedProducts  = products.slice(0, featuredProducts?.limit || 3);
+  const whatsappNumber     = settings.whatsappNumber || '';
 
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
+      {/* ── HERO ── */}
       <HeroSlider slides={hero?.slides || []} buttons={hero?.buttons || []} autoplayInterval={hero?.autoplayInterval || 5000} />
 
-      {/* ── TICKER ───────────────────────────────────────────────────────── */}
+      {/* ── TICKER ── */}
       <Ticker />
 
-      {/* ── COMPANY INTRO ────────────────────────────────────────────────── */}
+      {/* ── COMPANY INTRO ── */}
       {companyIntro && (
-        <section className="section-pad bg-cream-200 overflow-hidden">
+        <section className="section-pad bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-              {/* Left — editorial text */}
-              <SectionReveal>
+              <SectionReveal direction="left">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-px bg-gold-500" />
                   <span className="section-tag">{companyIntro.sectionTag || 'Who We Are'}</span>
                 </div>
-
-                <h2 className="font-heading font-bold text-charcoal-900 text-4xl md:text-5xl leading-[1.1] mb-6">
-                  {companyIntro.title}
-                </h2>
-
-                {companyIntro.description?.split('\n\n').map((para, i) => (
-                  <p key={i} className="text-gray-600 leading-relaxed mb-4 text-base">{para}</p>
-                ))}
-
+                <h2 className="section-title mb-6">{companyIntro.title}</h2>
+                <div className="space-y-4 text-ink-500 leading-relaxed text-[17px]">
+                  {companyIntro.description?.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
+                </div>
                 {companyIntro.highlights?.length > 0 && (
-                  <div className="flex flex-wrap gap-2.5 mt-6 mb-8">
+                  <div className="flex flex-wrap gap-2.5 mt-7">
                     {companyIntro.highlights.map((h) => (
-                      <span key={h.id} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 rounded-full px-4 py-2 text-sm font-medium shadow-sm">
+                      <div key={h.id} className="flex items-center gap-2 bg-sand-100 border border-sand-300 rounded-full px-4 py-2 text-sm font-medium text-ink-700">
                         <span>{h.icon}</span> {h.text}
-                      </span>
+                      </div>
                     ))}
                   </div>
                 )}
-
                 {companyIntro.ctaLabel && (
-                  <Link to={companyIntro.ctaLink || '/about'} className="btn-dark group">
-                    {companyIntro.ctaLabel}
-                    <FaArrowRight className="group-hover:translate-x-1 transition-transform text-xs" />
-                  </Link>
+                  <div className="mt-8">
+                    <Link to={companyIntro.ctaLink || '/about'} className="btn-primary group">
+                      {companyIntro.ctaLabel}
+                      <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
                 )}
               </SectionReveal>
 
-              {/* Right — image mosaic */}
-              <SectionReveal delay={150}>
+              <SectionReveal direction="right" delay={100}>
                 <div className="relative">
-                  {/* Large "2009" decorative number */}
-                  <div className="absolute -top-6 -right-4 font-heading font-bold text-[120px] text-charcoal-900/[0.04] leading-none select-none pointer-events-none z-0">
+                  {/* Large year decoration */}
+                  <div className="absolute -top-8 -right-4 font-heading font-black text-[10rem] text-ink-900/[0.04] leading-none select-none pointer-events-none z-0">
                     2009
                   </div>
-
                   <div className="relative z-10 grid grid-cols-2 gap-4">
                     {companyIntro.images?.[0] ? (
-                      <div className="col-span-2 rounded-2xl overflow-hidden h-60 shadow-lg">
+                      <div className="col-span-2 rounded-2xl overflow-hidden h-64 shadow-lg">
                         <img src={resolveUrl(companyIntro.images[0])} alt="Company" className="w-full h-full object-cover" />
                       </div>
                     ) : (
-                      <div className="col-span-2 rounded-2xl bg-charcoal-900 h-60 flex items-center justify-center shadow-lg overflow-hidden relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-forest-800 to-charcoal-900" />
-                        <div className="relative text-center text-white p-6">
-                          <div className="text-5xl mb-3">🌾</div>
-                          <p className="font-heading font-bold text-xl italic">"Quality in Every Grain"</p>
+                      <div className="col-span-2 rounded-2xl h-64 overflow-hidden shadow-lg bg-gradient-to-br from-sage-700 to-sage-900 flex items-center justify-center">
+                        <div className="text-center text-white/25 select-none">
+                          <div className="text-8xl mb-2">🌾</div>
+                          <p className="font-heading text-xl italic">"Quality in Every Grain"</p>
                         </div>
                       </div>
                     )}
-
                     {companyIntro.images?.[1] ? (
                       <div className="rounded-2xl overflow-hidden h-44 shadow-md">
                         <img src={resolveUrl(companyIntro.images[1])} alt="Mill" className="w-full h-full object-cover" />
                       </div>
                     ) : (
-                      <div className="rounded-2xl bg-forest-800 h-44 flex flex-col items-center justify-center shadow-md">
-                        <div className="text-3xl mb-2">🏭</div>
-                        <p className="text-forest-100 text-sm font-semibold">Modern Mill</p>
-                        <p className="text-forest-300 text-xs">50 MT/day</p>
+                      <div className="rounded-2xl bg-sage-100 border border-sage-200 h-44 flex flex-col items-center justify-center">
+                        <span className="text-3xl mb-2">🏭</span>
+                        <p className="text-sage-700 text-sm font-semibold">Modern Mill</p>
+                        <p className="text-sage-500 text-xs">50 MT/day</p>
                       </div>
                     )}
-
-                    {/* Est. card */}
-                    <div className="rounded-2xl bg-gold-500 h-44 flex flex-col items-center justify-center shadow-lg">
-                      <p className="text-white/80 text-xs uppercase tracking-widest mb-1">Established</p>
+                    <div className="rounded-2xl bg-gold-500 h-44 flex flex-col items-center justify-center shadow-md">
+                      <p className="text-white/70 text-xs uppercase tracking-widest mb-1">Established</p>
                       <p className="font-heading font-bold text-white text-5xl leading-none">2009</p>
-                      <div className="w-8 h-0.5 bg-white/40 my-2" />
-                      <p className="text-white/70 text-xs tracking-wide">Gaindakot, Nepal</p>
+                      <div className="w-8 h-px bg-white/30 my-2" />
+                      <p className="text-white/60 text-xs">Gaindakot, Nepal</p>
                     </div>
                   </div>
                 </div>
@@ -206,42 +194,39 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── WHY CHOOSE US ────────────────────────────────────────────────── */}
-      {whyChooseUs?.items?.length > 0 && (
-        <section className="section-pad bg-charcoal-900 grain-overlay relative overflow-hidden">
-          {/* Faded background text */}
-          <div className="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none">
-            <span className="font-heading font-bold text-[15vw] text-white/[0.025] leading-none whitespace-nowrap pl-8">
-              WHY CHOOSE US
-            </span>
-          </div>
+      {/* ── STATS ── */}
+      {stats?.items?.length > 0 && (
+        <StatCounter items={stats.items} backgroundStyle={stats.backgroundStyle} sectionTag={stats.sectionTag} title={stats.title} subtitle={stats.subtitle} />
+      )}
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-            <SectionReveal className="mb-14">
+      {/* ── WHY CHOOSE US ── */}
+      {whyChooseUs?.items?.length > 0 && (
+        <section className="section-pad bg-sand-200 overflow-hidden relative">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-gold-300/10 rounded-full blur-3xl" />
+          </div>
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <SectionReveal className="mb-14 max-w-2xl">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-px bg-gold-500" />
-                <span className="text-gold-400 text-xs font-semibold uppercase tracking-[0.2em]">
-                  {whyChooseUs.sectionTag || 'Our Advantages'}
-                </span>
+                <span className="section-tag">{whyChooseUs.sectionTag || 'Our Advantages'}</span>
               </div>
-              <h2 className="section-title-light max-w-2xl">{whyChooseUs.title}</h2>
-              {whyChooseUs.subtitle && (
-                <p className="section-subtitle-light">{whyChooseUs.subtitle}</p>
-              )}
+              <h2 className="section-title mb-4">{whyChooseUs.title}</h2>
+              {whyChooseUs.subtitle && <p className="section-subtitle">{whyChooseUs.subtitle}</p>}
             </SectionReveal>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {whyChooseUs.items.map((item, i) => (
                 <SectionReveal key={item.id} delay={i * 60}>
-                  <div className="group border border-white/8 hover:border-gold-500/40 rounded-2xl p-7 transition-all duration-400 h-full bg-white/[0.02] hover:bg-white/[0.05]">
-                    <div className="flex items-start gap-4 mb-4">
-                      <span className="font-heading font-bold text-gold-500/30 text-4xl leading-none group-hover:text-gold-500/60 transition-colors">
+                  <div className="group bg-white rounded-2xl p-7 border border-sand-300 hover:border-gold-400 hover:shadow-lg transition-all duration-400 h-full">
+                    <div className="flex items-start gap-4 mb-5">
+                      <div className="font-heading font-bold text-gold-400/50 text-4xl leading-none group-hover:text-gold-500/70 transition-colors select-none">
                         {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <span className="text-3xl mt-1">{item.icon}</span>
+                      </div>
+                      <span className="text-3xl mt-1 select-none">{item.icon}</span>
                     </div>
-                    <h3 className="font-heading font-bold text-white text-lg mb-2">{item.title}</h3>
-                    <p className="text-white/50 text-sm leading-relaxed group-hover:text-white/70 transition-colors">{item.description}</p>
+                    <h3 className="font-heading font-bold text-ink-900 text-lg mb-2">{item.title}</h3>
+                    <p className="text-ink-500 text-sm leading-relaxed">{item.description}</p>
                   </div>
                 </SectionReveal>
               ))}
@@ -250,9 +235,9 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── PROCESS ──────────────────────────────────────────────────────── */}
+      {/* ── PROCESS ── */}
       {process?.steps?.length > 0 && (
-        <section className="section-pad bg-cream-100">
+        <section className="section-pad bg-white">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="text-center mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -261,63 +246,57 @@ export default function Home() {
                 <div className="w-8 h-px bg-gold-500" />
               </div>
               <h2 className="section-title mx-auto">{process.title}</h2>
-              {process.subtitle && <p className="section-subtitle mx-auto">{process.subtitle}</p>}
+              {process.subtitle && <p className="section-subtitle mt-4 mx-auto text-center">{process.subtitle}</p>}
             </SectionReveal>
 
-            <div className="relative">
-              {/* Connecting line (desktop) */}
-              <div className="hidden lg:block absolute top-12 left-[calc(100%/12)] right-[calc(100%/12)] h-px bg-gradient-to-r from-transparent via-gold-300/40 to-transparent" />
+            <div className="relative grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Connector line on desktop */}
+              <div className="hidden lg:block absolute top-12 left-[calc(100%/6)] right-[calc(100%/6)] h-px bg-gradient-to-r from-transparent via-sand-300 to-transparent" />
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {process.steps.map((step, i) => (
-                  <SectionReveal key={step.id} delay={i * 80}>
-                    <div className="group text-center relative">
-                      {/* Step circle */}
-                      <div className="relative mx-auto w-24 h-24 mb-6">
-                        <div className="w-full h-full rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center group-hover:shadow-xl transition-shadow duration-300">
-                          <span className="text-3xl">{step.icon}</span>
-                        </div>
-                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center">
-                          <span className="font-heading font-bold text-white text-xs">{step.step}</span>
-                        </div>
+              {process.steps.map((step, i) => (
+                <SectionReveal key={step.id} delay={i * 80}>
+                  <div className="group text-center relative">
+                    <div className="relative mx-auto w-24 h-24 mb-6">
+                      <div className="w-full h-full rounded-full bg-sand-100 border-2 border-sand-300 group-hover:border-gold-400 flex items-center justify-center transition-all duration-300 shadow-sm">
+                        <span className="text-3xl select-none">{step.icon}</span>
                       </div>
-                      <h3 className="font-heading font-bold text-charcoal-900 text-lg mb-2">{step.title}</h3>
-                      <p className="text-gray-500 text-sm leading-relaxed">{step.description}</p>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center shadow-md">
+                        <span className="font-heading font-bold text-white text-xs">{step.step}</span>
+                      </div>
                     </div>
-                  </SectionReveal>
-                ))}
-              </div>
+                    <h3 className="font-heading font-bold text-ink-900 text-lg mb-2">{step.title}</h3>
+                    <p className="text-ink-500 text-sm leading-relaxed">{step.description}</p>
+                  </div>
+                </SectionReveal>
+              ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* ── FEATURED PRODUCTS ────────────────────────────────────────────── */}
+      {/* ── FEATURED PRODUCTS ── */}
       {displayedProducts.length > 0 && (
-        <section className="section-pad bg-charcoal-900 grain-overlay relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-            <SectionReveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <section className="section-pad bg-sand-100">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <SectionReveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
               <div>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-px bg-gold-500" />
-                  <span className="text-gold-400 text-xs font-semibold uppercase tracking-[0.2em]">
-                    {featuredProducts?.sectionTag || 'Our Products'}
-                  </span>
+                  <span className="section-tag">{featuredProducts?.sectionTag || 'Our Products'}</span>
                 </div>
-                <h2 className="section-title-light">{featuredProducts?.title || 'Featured Rice'}</h2>
-                {featuredProducts?.subtitle && <p className="section-subtitle-light">{featuredProducts.subtitle}</p>}
+                <h2 className="section-title">{featuredProducts?.title || 'Featured Rice Varieties'}</h2>
+                {featuredProducts?.subtitle && <p className="section-subtitle mt-3">{featuredProducts.subtitle}</p>}
               </div>
               <Link to={featuredProducts?.ctaLink || '/products'}
-                className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 font-medium text-sm transition-colors group flex-shrink-0">
-                {featuredProducts?.ctaLabel || 'View All'} <FaArrowRight className="group-hover:translate-x-1 transition-transform text-xs" />
+                className="inline-flex items-center gap-2 text-gold-600 hover:text-gold-700 font-semibold text-sm transition-colors group flex-shrink-0">
+                {featuredProducts?.ctaLabel || 'View All Products'}
+                <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
               </Link>
             </SectionReveal>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
               {displayedProducts.map((product, i) => (
-                <SectionReveal key={product._id} delay={i * 100}>
+                <SectionReveal key={product._id} delay={i * 80}>
                   <ProductCard product={product} whatsappNumber={whatsappNumber} brands={brands} compactMode />
                 </SectionReveal>
               ))}
@@ -326,23 +305,22 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── BRANDS ───────────────────────────────────────────────────────── */}
+      {/* ── BRANDS ── */}
       {brandsSection?.isVisible !== false && brands.length > 0 && (
-        <section className="section-pad-sm bg-white border-b border-gray-100">
+        <section className="section-pad-sm bg-white border-t border-sand-300">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-8 h-px bg-gold-500" />
                 <span className="section-tag">{brandsSection?.sectionTag || 'Our Brands'}</span>
                 <div className="w-8 h-px bg-gold-500" />
               </div>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-charcoal-900">{brandsSection?.title || 'Our Brands'}</h2>
-              {brandsSection?.subtitle && <p className="section-subtitle mx-auto mt-3">{brandsSection.subtitle}</p>}
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink-900">{brandsSection?.title || 'Our Trusted Brands'}</h2>
+              {brandsSection?.subtitle && <p className="section-subtitle mt-3 mx-auto text-center">{brandsSection.subtitle}</p>}
             </SectionReveal>
-
-            <div className={`grid gap-8 ${brands.length === 1 ? 'max-w-sm mx-auto' : brands.length === 2 ? 'sm:grid-cols-2 max-w-2xl mx-auto' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
+            <div className={`grid gap-7 ${brands.length === 1 ? 'max-w-sm mx-auto' : brands.length === 2 ? 'sm:grid-cols-2 max-w-2xl mx-auto' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
               {brands.map((brand, i) => (
-                <SectionReveal key={brand._id} delay={i * 100}>
+                <SectionReveal key={brand._id} delay={i * 80}>
                   <BrandCard brand={brand} />
                 </SectionReveal>
               ))}
@@ -351,14 +329,9 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── STATISTICS ───────────────────────────────────────────────────── */}
-      {stats?.items?.length > 0 && (
-        <StatCounter items={stats.items} backgroundStyle={stats.backgroundStyle} sectionTag={stats.sectionTag} title={stats.title} subtitle={stats.subtitle} />
-      )}
-
-      {/* ── GALLERY (BENTO) ──────────────────────────────────────────────── */}
+      {/* ── GALLERY ── */}
       {gallery?.images?.length > 0 && (
-        <section className="section-pad bg-cream-200 overflow-hidden">
+        <section className="section-pad bg-sand-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
               <div>
@@ -367,15 +340,15 @@ export default function Home() {
                   <span className="section-tag">{gallery.sectionTag || 'Gallery'}</span>
                 </div>
                 <h2 className="section-title">{gallery.title}</h2>
-                {gallery.subtitle && <p className="section-subtitle">{gallery.subtitle}</p>}
+                {gallery.subtitle && <p className="section-subtitle mt-3">{gallery.subtitle}</p>}
               </div>
               <Link to={gallery.ctaLink || '/gallery'}
-                className="inline-flex items-center gap-2 text-charcoal-900 hover:text-gold-600 font-medium text-sm transition-colors group flex-shrink-0">
-                {gallery.ctaLabel || 'View All Photos'} <FaArrowRight className="group-hover:translate-x-1 transition-transform text-xs" />
+                className="inline-flex items-center gap-2 text-gold-600 hover:text-gold-700 font-semibold text-sm transition-colors group flex-shrink-0">
+                {gallery.ctaLabel || 'View All Photos'}
+                <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
               </Link>
             </SectionReveal>
 
-            {/* Bento grid layout */}
             <SectionReveal>
               {gallery.images.length === 1 && (
                 <div className="h-80 w-full">
@@ -396,10 +369,7 @@ export default function Home() {
                       key={img.id || i}
                       src={img.src}
                       caption={img.caption}
-                      className={
-                        i === 0 ? 'row-span-2 col-span-1 md:col-span-1' :
-                        i === 3 ? 'col-span-2 md:col-span-1' : ''
-                      }
+                      className={i === 0 ? 'row-span-2' : i === 3 ? 'col-span-2 md:col-span-1' : ''}
                     />
                   ))}
                 </div>
@@ -409,54 +379,43 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── TESTIMONIALS ─────────────────────────────────────────────────── */}
+      {/* ── TESTIMONIALS ── */}
       {testimonialsSection?.isVisible !== false && testimonials.length > 0 && (
-        <section className="section-pad bg-[#0D1B0E] grain-overlay relative overflow-hidden">
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="section-pad bg-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionReveal className="text-center mb-14">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-8 h-px bg-gold-500" />
-                <span className="text-gold-400 text-xs font-semibold uppercase tracking-[0.2em]">
-                  {testimonialsSection?.sectionTag || 'Testimonials'}
-                </span>
+                <span className="section-tag">{testimonialsSection?.sectionTag || 'Testimonials'}</span>
                 <div className="w-8 h-px bg-gold-500" />
               </div>
-              <h2 className="section-title-light">
-                {testimonialsSection?.title || 'What Our Customers Say'}
-              </h2>
-              {testimonialsSection?.subtitle && (
-                <p className="section-subtitle-light mx-auto">{testimonialsSection.subtitle}</p>
-              )}
+              <h2 className="section-title mx-auto">{testimonialsSection?.title || 'What Our Customers Say'}</h2>
+              {testimonialsSection?.subtitle && <p className="section-subtitle mt-4 mx-auto text-center">{testimonialsSection.subtitle}</p>}
             </SectionReveal>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.slice(0, 6).map((t, i) => (
-                <SectionReveal key={t._id} delay={i * 70}>
-                  <div className="group relative border border-white/8 hover:border-gold-500/30 rounded-2xl p-7 transition-all duration-400 bg-white/[0.02] hover:bg-white/[0.05] h-full flex flex-col">
-                    <FaQuoteLeft className="text-gold-500/20 text-4xl mb-5 group-hover:text-gold-500/40 transition-colors" />
-
+                <SectionReveal key={t._id} delay={i * 60}>
+                  <div className="group bg-sand-100 border border-sand-300 hover:border-gold-400 rounded-2xl p-7 h-full flex flex-col transition-all duration-400 hover:shadow-lg">
+                    <FaQuoteLeft className="text-gold-400/40 text-3xl mb-5" />
                     <div className="flex gap-0.5 mb-4">
                       {[1,2,3,4,5].map((n) => (
-                        <FaStar key={n} className={`text-xs ${n <= t.rating ? 'text-gold-400' : 'text-white/10'}`} />
+                        <FaStar key={n} className={`text-xs ${n <= t.rating ? 'text-gold-400' : 'text-sand-300'}`} />
                       ))}
                     </div>
-
-                    <p className="text-white/60 text-sm leading-relaxed flex-1 mb-6 italic">"{t.content}"</p>
-
-                    <div className="flex items-center gap-3 pt-5 border-t border-white/8">
-                      <div className="w-10 h-10 rounded-full overflow-hidden bg-forest-800 flex items-center justify-center flex-shrink-0">
+                    <p className="text-ink-600 text-sm leading-relaxed flex-1 mb-6 italic">"{t.content}"</p>
+                    <div className="flex items-center gap-3 pt-5 border-t border-sand-300">
+                      <div className="w-10 h-10 rounded-full overflow-hidden bg-gold-100 border border-gold-200 flex items-center justify-center flex-shrink-0">
                         {t.avatar ? (
                           <img src={resolveUrl(t.avatar)} alt={t.name} className="w-full h-full object-cover" />
                         ) : (
-                          <span className="text-gold-300 font-bold text-sm">{t.name?.[0]?.toUpperCase()}</span>
+                          <span className="text-gold-600 font-bold text-sm">{t.name?.[0]?.toUpperCase()}</span>
                         )}
                       </div>
                       <div>
-                        <p className="font-semibold text-white text-sm">{t.name}</p>
+                        <p className="font-semibold text-ink-900 text-sm">{t.name}</p>
                         {(t.role || t.company) && (
-                          <p className="text-white/35 text-xs">{[t.role, t.company].filter(Boolean).join(' · ')}</p>
+                          <p className="text-ink-400 text-xs">{[t.role, t.company].filter(Boolean).join(' · ')}</p>
                         )}
                       </div>
                     </div>
@@ -468,33 +427,31 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── CALL TO ACTION ───────────────────────────────────────────────── */}
+      {/* ── CTA ── */}
       {cta && (
-        <section className={`${ctaBgMap[cta.backgroundStyle] || ctaBgMap.green} relative overflow-hidden grain-overlay`}>
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold-500/5 rounded-full blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2" />
+        <section className={`relative ${ctaBgMap[cta.backgroundStyle] || ctaBgMap.dark} grain-overlay overflow-hidden`}>
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-500/8 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/3 rounded-full blur-3xl" />
+          </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
             <div className="grid lg:grid-cols-2 gap-14 items-center">
-              {/* Left — heading */}
-              <SectionReveal>
+              <SectionReveal direction="left">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-px bg-gold-500" />
-                  <span className="text-gold-400 text-xs font-semibold uppercase tracking-[0.2em]">Get In Touch</span>
+                  <span className="text-gold-400 text-[11px] font-semibold uppercase tracking-[0.25em]">Get In Touch</span>
                 </div>
-                <h2 className="font-heading font-bold text-white text-4xl md:text-5xl leading-[1.1] mb-5">
-                  {cta.title}
-                </h2>
-                {cta.subtitle && (
-                  <p className="text-white/60 text-lg mb-10 leading-relaxed max-w-md">{cta.subtitle}</p>
-                )}
+                <h2 className="section-title-light mb-5">{cta.title}</h2>
+                {cta.subtitle && <p className="section-subtitle-light mb-10">{cta.subtitle}</p>}
                 <div className="flex flex-wrap gap-4">
                   {cta.buttons?.map((btn) => {
                     const isExternal = btn.link?.startsWith('tel:') || btn.link?.startsWith('mailto:') || btn.link?.startsWith('http');
                     const cls = btn.variant === 'secondary'
-                      ? 'inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-400 text-white font-semibold px-7 py-3 rounded-full text-sm transition-all duration-300 shadow-lg hover:-translate-y-0.5'
+                      ? 'btn-gold shadow-lg'
                       : btn.variant === 'outline'
-                      ? 'btn-outline'
-                      : 'inline-flex items-center gap-2 bg-white text-charcoal-900 hover:bg-cream-200 font-semibold px-7 py-3 rounded-full text-sm transition-all duration-300 shadow-lg hover:-translate-y-0.5';
+                      ? 'btn-outline-light'
+                      : 'inline-flex items-center gap-2 bg-white text-ink-900 hover:bg-sand-100 font-semibold px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg text-sm';
                     return isExternal
                       ? <a key={btn.id} href={btn.link} className={cls}>{btn.label}</a>
                       : <Link key={btn.id} to={btn.link || '/contact'} className={cls}>{btn.label}</Link>;
@@ -502,41 +459,36 @@ export default function Home() {
                 </div>
               </SectionReveal>
 
-              {/* Right — info card */}
-              <SectionReveal delay={150}>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+              <SectionReveal direction="right" delay={120}>
+                <div className="bg-white/8 border border-white/12 rounded-2xl p-8 backdrop-blur-sm">
                   <h3 className="font-heading font-bold text-white text-xl mb-6">Visit Our Mill</h3>
-
                   <div className="space-y-5 mb-8">
                     <div className="flex gap-4 items-start">
-                      <div className="w-10 h-10 bg-gold-500/10 border border-gold-500/20 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-lg">📍</span>
+                      <div className="w-10 h-10 bg-gold-500/15 border border-gold-500/25 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span className="text-base">📍</span>
                       </div>
-                      <div>
-                        <p className="text-white/40 text-xs uppercase tracking-wider mb-0.5">Address</p>
+                      <div className="pt-1">
+                        <p className="text-white/35 text-[11px] uppercase tracking-wider mb-0.5">Address</p>
                         <p className="text-white text-sm">Gaindakot, Nawalpur<br/>Gandaki Province, Nepal</p>
                       </div>
                     </div>
-
                     {settings.phoneNumber && (
-                      <div className="flex gap-4 items-start">
-                        <div className="w-10 h-10 bg-gold-500/10 border border-gold-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                          <FaPhone className="text-gold-400 text-sm" />
+                      <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 bg-gold-500/15 border border-gold-500/25 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <FaPhone className="text-gold-400 text-xs" />
                         </div>
                         <div>
-                          <p className="text-white/40 text-xs uppercase tracking-wider mb-0.5">Phone</p>
+                          <p className="text-white/35 text-[11px] uppercase tracking-wider mb-0.5">Phone</p>
                           <a href={`tel:${settings.phoneNumber}`} className="text-white hover:text-gold-300 text-sm transition-colors">{settings.phoneNumber}</a>
                         </div>
                       </div>
                     )}
                   </div>
-
                   {whatsappNumber && whatsappNumber !== '977XXXXXXXXXX' && (
                     <a
                       href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(settings.whatsappDefaultMessage || 'Hello! I am interested in your rice products.')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all duration-300 shadow-lg"
+                      target="_blank" rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all shadow-md"
                     >
                       <FaWhatsapp className="text-lg" /> Chat on WhatsApp
                     </a>
