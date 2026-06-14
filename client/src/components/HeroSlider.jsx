@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowRight, FaChevronLeft, FaChevronRight, FaCheckCircle } from 'react-icons/fa';
 import resolveUrl from '../lib/resolveUrl';
+import HeroParticles from './HeroParticles';
 
 const TRUST_BADGES = [
   '✓ ISO Certified Quality',
@@ -50,8 +51,11 @@ export default function HeroSlider({ slides = [], buttons = [], autoplayInterval
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
+      {/* ── Particle canvas — sits at z-0 behind everything ──────── */}
+      <HeroParticles />
+
       {/* ── Background decoratives ─────────────────────────────────── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
         <div className="absolute top-1/4 -left-40 w-[500px] h-[500px] bg-gold-300/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 -right-32 w-[400px] h-[400px] bg-sage-200/12 rounded-full blur-3xl" />
         <div
@@ -70,7 +74,7 @@ export default function HeroSlider({ slides = [], buttons = [], autoplayInterval
       </div>
 
       {/* ── Main grid ─────────────────────────────────────────────── */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-24 lg:pt-28 pb-16">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-24 lg:pt-28 pb-16" style={{ zIndex: 2 }}>
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center min-h-[calc(100vh-6rem)]">
 
           {/* LEFT — Content ────────────────────────────────────────── */}
@@ -141,7 +145,7 @@ export default function HeroSlider({ slides = [], buttons = [], autoplayInterval
                 <img
                   src={resolveUrl(slide.image)}
                   alt={slide.title || 'Rice Mill'}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover animate-ken-burns"
                 />
               ) : (
                 <div className={`w-full h-full bg-gradient-to-br ${FALLBACK_GRADIENTS[current % FALLBACK_GRADIENTS.length]} flex items-center justify-center`}>
@@ -152,8 +156,8 @@ export default function HeroSlider({ slides = [], buttons = [], autoplayInterval
               {/* Subtle vignette */}
               <div className="absolute inset-0 bg-gradient-to-t from-ink-900/30 via-transparent to-transparent" />
 
-              {/* ── Floating stat cards ── */}
-              {/* Top-left: Years */}
+              {/* ── Floating stat cards (2 only — rest live in the stats section) ── */}
+              {/* Top-left: Heritage */}
               <div className="absolute top-5 left-5 animate-float" style={{ animationDelay: '0s' }}>
                 <div className="bg-gold-500 rounded-2xl px-4 py-3 shadow-xl min-w-[110px]">
                   <div className="font-heading font-bold text-2xl text-white leading-none">15+</div>
@@ -161,27 +165,11 @@ export default function HeroSlider({ slides = [], buttons = [], autoplayInterval
                 </div>
               </div>
 
-              {/* Top-right: Capacity */}
-              <div className="absolute top-5 right-5 animate-float" style={{ animationDelay: '1.5s' }}>
+              {/* Bottom-right: Scale */}
+              <div className="absolute bottom-5 right-5 animate-float" style={{ animationDelay: '1s' }}>
                 <div className="glass-card rounded-2xl px-4 py-3 shadow-xl min-w-[120px] border border-sand-300/50">
                   <div className="font-heading font-bold text-2xl text-ink-900 leading-none">50 MT</div>
                   <div className="text-ink-500 text-xs font-medium mt-0.5">Daily Capacity</div>
-                </div>
-              </div>
-
-              {/* Bottom-left: Customers */}
-              <div className="absolute bottom-5 left-5 animate-float" style={{ animationDelay: '0.75s' }}>
-                <div className="glass-card rounded-2xl px-4 py-3 shadow-xl min-w-[130px] border border-sand-300/50">
-                  <div className="font-heading font-bold text-2xl text-ink-900 leading-none">10K+</div>
-                  <div className="text-ink-500 text-xs font-medium mt-0.5">Happy Customers</div>
-                </div>
-              </div>
-
-              {/* Bottom-right: Quality */}
-              <div className="absolute bottom-5 right-5 animate-float" style={{ animationDelay: '2s' }}>
-                <div className="bg-sage-600 rounded-2xl px-4 py-3 shadow-xl min-w-[110px]">
-                  <div className="font-heading font-bold text-2xl text-white leading-none">100%</div>
-                  <div className="text-white/80 text-xs font-medium mt-0.5">Natural Rice</div>
                 </div>
               </div>
             </div>

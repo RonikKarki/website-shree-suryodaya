@@ -61,7 +61,7 @@ function BentoItem({ src, caption, className = '' }) {
 
 const ctaBgMap = {
   green: 'bg-sage-900',
-  gold:  'bg-gradient-to-br from-gold-600 to-gold-700',
+  gold:  'bg-[radial-gradient(ellipse_at_top_right,#c8943a_0%,#b07a28_40%,#7d531a_100%)]',
   dark:  'bg-ink-900',
 };
 
@@ -219,7 +219,7 @@ export default function Home() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {whyChooseUs.items.map((item, i) => (
                 <SectionReveal key={item.id} delay={i * 60}>
-                  <div className="group bg-white rounded-2xl p-7 border border-sand-300 hover:border-gold-400 hover:shadow-lg transition-all duration-400 h-full">
+                  <div className="group bg-white rounded-2xl p-7 border border-sand-300 hover:border-gold-400 hover:shadow-lg hover:-translate-y-[5px] transition-all duration-300 h-full">
                     <div className="flex items-start gap-4 mb-5">
                       <div className="font-heading font-bold text-gold-400/50 text-4xl leading-none group-hover:text-gold-500/70 transition-colors select-none">
                         {String(i + 1).padStart(2, '0')}
@@ -397,7 +397,7 @@ export default function Home() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.slice(0, 6).map((t, i) => (
                 <SectionReveal key={t._id} delay={i * 60}>
-                  <div className="group bg-sand-100 border border-sand-300 hover:border-gold-400 rounded-2xl p-7 h-full flex flex-col transition-all duration-400 hover:shadow-lg">
+                  <div className="group bg-sand-100 border border-sand-300 hover:border-gold-400 rounded-2xl p-7 h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-[5px]">
                     <FaQuoteLeft className="text-gold-400/40 text-3xl mb-5" />
                     <div className="flex gap-0.5 mb-4">
                       {[1,2,3,4,5].map((n) => (
@@ -448,10 +448,13 @@ export default function Home() {
                 <div className="flex flex-wrap gap-4">
                   {cta.buttons?.map((btn) => {
                     const isExternal = btn.link?.startsWith('tel:') || btn.link?.startsWith('mailto:') || btn.link?.startsWith('http');
+                    const isGold = cta.backgroundStyle === 'gold';
                     const cls = btn.variant === 'secondary'
-                      ? 'btn-gold shadow-lg'
+                      ? (isGold
+                          ? 'inline-flex items-center gap-2 bg-white text-gold-800 hover:bg-sand-100 font-semibold px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg text-sm'
+                          : 'btn-gold shadow-lg')
                       : btn.variant === 'outline'
-                      ? 'btn-outline-light'
+                      ? 'btn-outline-light shadow-md'
                       : 'inline-flex items-center gap-2 bg-white text-ink-900 hover:bg-sand-100 font-semibold px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg text-sm';
                     return isExternal
                       ? <a key={btn.id} href={btn.link} className={cls}>{btn.label}</a>

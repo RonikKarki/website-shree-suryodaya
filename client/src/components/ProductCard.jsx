@@ -2,25 +2,17 @@ import { FaWhatsapp, FaTag } from 'react-icons/fa';
 import resolveUrl from '../lib/resolveUrl';
 
 const categoryConfig = {
-  premium:   { bg: 'bg-amber-50',   text: 'text-amber-700',   border: 'border-amber-200',  label: 'Premium',   dot: 'bg-amber-400' },
-  specialty: { bg: 'bg-purple-50',  text: 'text-purple-700',  border: 'border-purple-200', label: 'Specialty', dot: 'bg-purple-400' },
-  medium:    { bg: 'bg-blue-50',    text: 'text-blue-700',    border: 'border-blue-200',   label: 'Medium',    dot: 'bg-blue-400'  },
-  economy:   { bg: 'bg-slate-50',   text: 'text-slate-600',   border: 'border-slate-200',  label: 'Economy',   dot: 'bg-slate-400' },
-};
-
-const imageFallbacks = {
-  premium:   'from-amber-50 to-orange-100',
-  specialty: 'from-purple-50 to-pink-100',
-  medium:    'from-sky-50 to-blue-100',
-  economy:   'from-slate-50 to-gray-100',
+  premium:   { bg: 'bg-gold-100',   text: 'text-gold-700',    border: 'border-gold-200',   label: 'Premium',   dot: 'bg-gold-400'  },
+  specialty: { bg: 'bg-sage-50',    text: 'text-sage-700',    border: 'border-sage-200',   label: 'Specialty', dot: 'bg-sage-400'  },
+  medium:    { bg: 'bg-sand-100',   text: 'text-ink-600',     border: 'border-sand-300',   label: 'Medium',    dot: 'bg-sand-400'  },
+  economy:   { bg: 'bg-sand-200',   text: 'text-ink-500',     border: 'border-sand-300',   label: 'Economy',   dot: 'bg-sand-500'  },
 };
 
 const riceEmoji = { premium: '🌾', specialty: '✨', medium: '🍚', economy: '🛒' };
 
 export default function ProductCard({ product, whatsappNumber, compactMode = false, brands = [] }) {
-  const cat     = categoryConfig[product.category] || categoryConfig.medium;
-  const fallback = imageFallbacks[product.category] || imageFallbacks.medium;
-  const emoji   = riceEmoji[product.category] || '🌾';
+  const cat   = categoryConfig[product.category] || categoryConfig.medium;
+  const emoji = riceEmoji[product.category] || '🌾';
   const brand   = product.brand ? brands.find((b) => b.name === product.brand) : null;
 
   const waUrl = (() => {
@@ -31,9 +23,9 @@ export default function ProductCard({ product, whatsappNumber, compactMode = fal
   })();
 
   return (
-    <article className="group bg-white rounded-2xl overflow-hidden border border-sand-300 hover:border-gold-400 hover:shadow-xl transition-all duration-400 flex flex-col">
+    <article className="group bg-white rounded-2xl overflow-hidden border border-sand-300 hover:border-gold-400 hover:shadow-lg hover:-translate-y-[5px] transition-all duration-300 flex flex-col">
       {/* ── Image ── */}
-      <div className={`relative overflow-hidden flex-shrink-0 ${compactMode ? 'h-48' : 'h-56'} bg-gradient-to-br ${fallback}`}>
+      <div className={`relative overflow-hidden flex-shrink-0 ${compactMode ? 'h-48' : 'h-56'} bg-gradient-to-br from-sand-100 to-sand-200`}>
         {product.image ? (
           <img
             src={resolveUrl(product.image)}
@@ -41,7 +33,7 @@ export default function ProductCard({ product, whatsappNumber, compactMode = fal
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
           />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-sand-100 to-gold-100">
             <span className="text-6xl opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-500 select-none">
               {emoji}
             </span>

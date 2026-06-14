@@ -8,17 +8,23 @@ export default function SectionReveal({ children, className = '', delay = 0, dir
     const el = ref.current;
     if (!el) return;
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.add('visible');
+      return;
+    }
+
+    let tid;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => el.classList.add('visible'), delay);
           observer.unobserve(el);
+          tid = setTimeout(() => el.classList.add('visible'), delay);
         }
       },
       { threshold: 0.10 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => { observer.disconnect(); clearTimeout(tid); };
   }, [delay]);
 
   const cls =

@@ -7,6 +7,10 @@ function useCountUp(target, duration = 2000, start = false) {
     if (!start) return;
     const num = parseInt(target.replace(/\D/g, ''), 10) || 0;
     if (num === 0) { setCount(0); return; }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCount(num);
+      return;
+    }
     const step = Math.ceil(num / (duration / 16));
     let current = 0;
     const timer = setInterval(() => {
@@ -68,6 +72,10 @@ export default function StatCounter({ items = [], backgroundStyle = 'dark', sect
 
   return (
     <section ref={ref} className={`relative ${bgClass} grain-overlay overflow-hidden`}>
+      {/* Seam hairlines — soften hard transitions between dark band and light neighbours */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold-500/25 to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold-500/25 to-transparent pointer-events-none z-10" />
+
       {/* Decorative glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
