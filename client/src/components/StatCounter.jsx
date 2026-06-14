@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import EmojiIcon from '../lib/iconMap';
 
 function useCountUp(target, duration = 2000, start = false) {
   const [count, setCount] = useState(0);
@@ -25,8 +26,8 @@ function SingleStat({ icon, value, suffix = '', label, started, index }) {
       {/* Divider (not on last) */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-12 bg-white/8 hidden lg:block last:hidden" />
 
-      <div className="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300 select-none">
-        {icon}
+      <div className="mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+        <EmojiIcon emoji={icon} className="w-8 h-8 text-gold-400" strokeWidth={1.5} />
       </div>
 
       <div className="font-heading font-bold text-gold-400 leading-none mb-1" style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)' }}>

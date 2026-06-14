@@ -4,6 +4,7 @@ import { FaCheckCircle, FaExternalLinkAlt } from 'react-icons/fa';
 import PageHero from '../components/PageHero';
 import SectionReveal from '../components/SectionReveal';
 import useSEO from '../hooks/useSEO';
+import EmojiIcon from '../lib/iconMap';
 
 function SkeletonBlock({ h = 'h-6', w = 'w-full', className = '' }) {
   return <div className={`${h} ${w} bg-sand-200 rounded-xl animate-pulse ${className}`} />;
@@ -73,7 +74,9 @@ export default function Factory() {
               {capacity.items.map(({ id, label, value, icon }, i) => (
                 <SectionReveal key={id} delay={i * 60}>
                   <div className="bg-sand-100 border border-sand-300 hover:border-gold-400 rounded-2xl p-5 text-center transition-all duration-300 hover:shadow-md h-full">
-                    <div className="text-3xl mb-2">{icon}</div>
+                    <div className="flex justify-center mb-3">
+                      <EmojiIcon emoji={icon} className="w-8 h-8 text-gold-500" strokeWidth={1.5} />
+                    </div>
                     <div className="font-heading font-bold text-ink-800 text-xl">{value}</div>
                     <div className="text-ink-400 text-xs mt-1 leading-tight">{label}</div>
                   </div>
@@ -106,7 +109,9 @@ export default function Factory() {
                     <div className="absolute top-3 right-4 font-heading font-bold text-6xl text-sand-200 select-none group-hover:text-sand-300 transition-colors">
                       {step}
                     </div>
-                    <div className="text-4xl mb-4 relative">{icon}</div>
+                    <div className="mb-4 relative flex">
+                      <EmojiIcon emoji={icon} className="w-9 h-9 text-gold-500" strokeWidth={1.5} />
+                    </div>
                     <h3 className="font-heading font-bold text-ink-900 mb-2 relative">{title}</h3>
                     <p className="text-ink-500 text-sm leading-relaxed relative">{desc}</p>
                   </div>

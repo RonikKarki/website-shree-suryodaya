@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { LuTarget, LuRocket, LuHeart } from 'react-icons/lu';
 import SectionReveal from '../components/SectionReveal';
 import PageHero from '../components/PageHero';
 import useSEO from '../hooks/useSEO';
 import resolveUrl from '../lib/resolveUrl';
+import EmojiIcon from '../lib/iconMap';
 
 function SkeletonBlock({ h = 'h-8', w = 'w-full' }) {
   return <div className={`${h} ${w} bg-sand-200 rounded-xl animate-pulse`} />;
@@ -73,7 +75,9 @@ export default function About() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {profile.highlights.map((h) => (
                       <div key={h.id} className="bg-sand-100 rounded-2xl p-4 text-center border border-sand-300">
-                        <div className="text-2xl mb-1">{h.icon}</div>
+                        <div className="flex justify-center mb-2">
+                          <EmojiIcon emoji={h.icon} className="w-6 h-6 text-gold-500" strokeWidth={1.5} />
+                        </div>
                         <div className="font-bold text-ink-800 text-sm leading-tight">{h.value}</div>
                         <div className="text-ink-400 text-xs mt-0.5">{h.label}</div>
                       </div>
@@ -100,19 +104,19 @@ export default function About() {
             </SectionReveal>
             <div className="grid md:grid-cols-3 gap-7">
               {[
-                { data: visionMission.vision, icon: '🎯', accent: '#C8A86B' },
-                { data: visionMission.mission, icon: '🚀', accent: '#4F6D4A' },
-                { data: visionMission.commitment, icon: '❤️', accent: '#C8A86B' },
-              ].map(({ data: vm, icon, accent }, i) => vm && (
+                { data: visionMission.vision,      Icon: LuTarget,  accent: '#C8A86B' },
+                { data: visionMission.mission,     Icon: LuRocket,  accent: '#4F6D4A' },
+                { data: visionMission.commitment,  Icon: LuHeart,   accent: '#C8A86B' },
+              ].map(({ data: vm, Icon, accent }, i) => vm && (
                 <SectionReveal key={i} delay={i * 80}>
                   <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-400 h-full border border-sand-300 hover:border-gold-300">
                     {vm.image && (
                       <img src={resolveUrl(vm.image)} alt={vm.title} className="w-full h-36 object-cover" />
                     )}
                     <div className="p-7">
-                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 text-2xl shadow-md"
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 shadow-md"
                         style={{ backgroundColor: `${accent}20`, border: `2px solid ${accent}40` }}>
-                        {icon}
+                        <Icon className="w-6 h-6" style={{ color: accent }} strokeWidth={1.75} aria-hidden />
                       </div>
                       <h3 className="font-heading font-bold text-ink-900 text-xl mb-3">{vm.title}</h3>
                       <p className="text-ink-500 text-sm leading-relaxed">{vm.content}</p>
@@ -141,8 +145,8 @@ export default function About() {
               {values.map((v, i) => (
                 <SectionReveal key={v.id} delay={i * 70}>
                   <div className="group bg-sand-100 hover:bg-sand-200 rounded-2xl p-6 transition-all duration-300 border border-sand-300 hover:border-gold-300 h-full">
-                    <div className="w-12 h-12 bg-gold-100 border border-gold-200 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                      {v.icon}
+                    <div className="w-12 h-12 bg-gold-100 border border-gold-200 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <EmojiIcon emoji={v.icon} className="w-6 h-6 text-gold-600" strokeWidth={1.5} />
                     </div>
                     <h3 className="font-heading font-bold text-ink-900 text-lg mb-2">{v.title}</h3>
                     <p className="text-ink-500 text-sm leading-relaxed">{v.description}</p>
@@ -218,7 +222,9 @@ export default function About() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {factory.specs.map((s) => (
                       <div key={s.id} className="bg-sand-100 rounded-2xl p-4 text-center border border-sand-300">
-                        <div className="text-2xl mb-1">{s.icon}</div>
+                        <div className="flex justify-center mb-2">
+                          <EmojiIcon emoji={s.icon} className="w-7 h-7 text-gold-500" strokeWidth={1.5} />
+                        </div>
                         <div className="font-bold text-ink-800 text-sm">{s.value}</div>
                         <div className="text-ink-400 text-xs mt-0.5">{s.label}</div>
                       </div>

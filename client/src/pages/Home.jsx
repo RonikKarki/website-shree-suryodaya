@@ -9,6 +9,7 @@ import HeroSlider from '../components/HeroSlider';
 import StatCounter from '../components/StatCounter';
 import ProductCard from '../components/ProductCard';
 import SectionReveal from '../components/SectionReveal';
+import EmojiIcon from '../lib/iconMap';
 
 // ── Ticker ────────────────────────────────────────────────────────────────────
 const TICKER_ITEMS = [
@@ -223,7 +224,7 @@ export default function Home() {
                       <div className="font-heading font-bold text-gold-400/50 text-4xl leading-none group-hover:text-gold-500/70 transition-colors select-none">
                         {String(i + 1).padStart(2, '0')}
                       </div>
-                      <span className="text-3xl mt-1 select-none">{item.icon}</span>
+                      <EmojiIcon emoji={item.icon} className="w-7 h-7 text-gold-500 mt-1" strokeWidth={1.5} />
                     </div>
                     <h3 className="font-heading font-bold text-ink-900 text-lg mb-2">{item.title}</h3>
                     <p className="text-ink-500 text-sm leading-relaxed">{item.description}</p>
@@ -258,7 +259,7 @@ export default function Home() {
                   <div className="group text-center relative">
                     <div className="relative mx-auto w-24 h-24 mb-6">
                       <div className="w-full h-full rounded-full bg-sand-100 border-2 border-sand-300 group-hover:border-gold-400 flex items-center justify-center transition-all duration-300 shadow-sm">
-                        <span className="text-3xl select-none">{step.icon}</span>
+                        <EmojiIcon emoji={step.icon} className="w-9 h-9 text-gold-600" strokeWidth={1.5} />
                       </div>
                       <div className="absolute -top-2 -right-2 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center shadow-md">
                         <span className="font-heading font-bold text-white text-xs">{step.step}</span>
